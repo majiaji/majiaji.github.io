@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>fantasy&#39;s blog</title>
+  
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://yoursite.com/"/>
+  <updated>2016-11-21T16:29:10.000Z</updated>
+  <id>http://yoursite.com/</id>
+  
+  <author>
+    <name>fantasy</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>啊，第一篇博客</title>
+    <link href="http://yoursite.com/2016/11/21/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/"/>
+    <id>http://yoursite.com/2016/11/21/第一篇博客/</id>
+    <published>2016-11-21T07:06:25.000Z</published>
+    <updated>2016-11-21T16:29:10.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2>为什么要写博客</h2>
+
+<p>现在技术越来越好了，网络内容的主流媒介完成了文字-&gt;图片-&gt;视频-&gt;直播这样的转变。下班回来后，经常各种app(微信知乎头条微博等)刷一遍，来补充一下白天被抽空的精神世界。后来我发现了一个问题，对于各种网络内容来说，我一直都是一个“看客”，几乎很少去评论或者主动提出一些观点，这是一件非常可怕的事情。虽然看别人的东西也能学到很多东西，但是少了一个自己主动思考的过程。最近也在追<a href="http://www.hbo.com/westworld" target="_blank" rel="external">西部世界</a>，这算不算一种自我觉醒呢？哈哈。<br>所以打算从今天开始写博客了，可能包括自己日常生活中的感悟、吐槽和理解，还会分享一些技术知识和踩过的坑，希望能帮助到大家，也希望能认识更多的朋友。</p>
+<p></p><h2>flag</h2><br>这里先立个flag，每周至少一篇详细的技术博客，坚持，共勉。<p></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2&gt;为什么要写博客&lt;/h2&gt;
+
+&lt;p&gt;现在技术越来越好了，网络内容的主流媒介完成了文字-&amp;gt;图片-&amp;gt;视频-&amp;gt;直播这样的转变。下班回来后，经常各种app(微信知乎头条微博等)刷一遍，来补充一下白天被抽空的精神世界。后来我发现了一个问题，对于各种网络内容来说，我一
+    
+    </summary>
+    
+      <category term="闲谈" scheme="http://yoursite.com/categories/%E9%97%B2%E8%B0%88/"/>
+    
+    
+      <category term="闲谈" scheme="http://yoursite.com/tags/%E9%97%B2%E8%B0%88/"/>
+    
+  </entry>
+  
+</feed>

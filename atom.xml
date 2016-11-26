@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-11-26T11:26:03.000Z</updated>
+  <updated>2016-11-26T11:32:45.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://yoursite.com/2016/11/23/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E7%9A%84%E6%B5%AE%E5%85%89%E6%8E%A0%E5%BD%B1/"/>
     <id>http://yoursite.com/2016/11/23/前端开发的浮光掠影/</id>
     <published>2016-11-22T16:04:18.000Z</published>
-    <updated>2016-11-26T11:26:03.000Z</updated>
+    <updated>2016-11-26T11:32:45.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前段时间有个比较🔥的文章 <a href="https://zhuanlan.zhihu.com/p/22782487" target="_blank" rel="external">在2016年学JavaScript是一种什么样的体验</a> 读完之后深深感受到了前端同学的痛点：用好各种框架、脚手架已经让人应接不暇了，与此同时还要不停地造自己的小轮子，着实不易。</p>
 <p>在大学的有段时间，我也考虑过去做前端。因为所见即所得的东西还是很容易给人成就感的。后来只坚持学了半个学期就放弃了，主要因为一直没有搞懂，也记不住各种css标签的含义，这样导致每次在调样式的时候都无比捉急，连最基础的还原视觉稿都做不到。于是又悻悻的回到了黑框框的后端世界。</p>
@@ -50,8 +50,12 @@
     
     </summary>
     
+      <category term="前端" scheme="http://yoursite.com/categories/%E5%89%8D%E7%AB%AF/"/>
     
-      <category term="-- 前端 -- javascript" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF-javascript/"/>
+    
+      <category term="前端" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF/"/>
+    
+      <category term="javascript" scheme="http://yoursite.com/tags/javascript/"/>
     
   </entry>
   

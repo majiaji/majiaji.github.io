@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-11-21T16:29:10.000Z</updated>
+  <updated>2016-11-26T11:26:03.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,46 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>前端开发的浮光掠影</title>
+    <link href="http://yoursite.com/2016/11/23/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E7%9A%84%E6%B5%AE%E5%85%89%E6%8E%A0%E5%BD%B1/"/>
+    <id>http://yoursite.com/2016/11/23/前端开发的浮光掠影/</id>
+    <published>2016-11-22T16:04:18.000Z</published>
+    <updated>2016-11-26T11:26:03.000Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前段时间有个比较🔥的文章 <a href="https://zhuanlan.zhihu.com/p/22782487" target="_blank" rel="external">在2016年学JavaScript是一种什么样的体验</a> 读完之后深深感受到了前端同学的痛点：用好各种框架、脚手架已经让人应接不暇了，与此同时还要不停地造自己的小轮子，着实不易。</p>
+<p>在大学的有段时间，我也考虑过去做前端。因为所见即所得的东西还是很容易给人成就感的。后来只坚持学了半个学期就放弃了，主要因为一直没有搞懂，也记不住各种css标签的含义，这样导致每次在调样式的时候都无比捉急，连最基础的还原视觉稿都做不到。于是又悻悻的回到了黑框框的后端世界。</p>
+<p>正式工作后也有机会接触一些前端的工作，在工作之余我总结了自己常用的开发模式和套路，分享给大家：</p>
+<a id="more"></a>
+<h2 id="Velocity-jQuery-Bootstrap"><a href="#Velocity-jQuery-Bootstrap" class="headerlink" title="Velocity + jQuery + Bootstrap"></a>Velocity + jQuery + Bootstrap</h2><p>这个用的是最多的。Velocity结合springMVC一起使用，在Controller前，把对象塞到一个modelMap中，然后由VelocityEngine根据vm模板去渲染，然后再返回给浏览器。之后前端页面的业务逻辑通过ajax请求后端接口，然后用jQuery直接操作dom节点修改，简单粗暴。</p>
+<p>这个套路是比较简单也比较常用的，但是有一个问题，如果从0开始搭建一个系统的前端框架那么要怎么做才好呢？header啊sidebar啊布局啊还是不知道如何下手。这时候可以用下 <a href="http://www.bootcss.com/p/layoutit" target="_blank" rel="external">Bootstrap可视化布局系统</a> 可以用这个工具直接拖出来想要的前端栅格布局、导航栏、边栏二级导航（如果需要)、footer等，不满意的细节可以把它down下来自己手动修改一下，需要的组件可以到 <a href="http://www.bootcss.com/" target="_blank" rel="external">Bootstrap组件库</a>中查找。</p>
+<p>Bootstrap库中的组件还是比较齐全的，而且因为使用的人很多也比较稳定，不会有什么奇怪的bug。如果不仅仅满足于这些基础的组件，还可以到<a href="http://www.jq22.com/" target="_blank" rel="external">jQuery插件库</a>中查找自己喜欢的酷炫的jQuery组件。不过这时候需要注意组件库之间有可能会冲突，引用时候要check一下。</p>
+<p>总结：<br>用上述工具可以快速从零搭建起来一个前端系统框架，并进行业务开发。需要了解一下Velocity和jQuery的语法，尤其要熟练使用jQuery选择器。<br>优点：<br>符合简单的“面向过程”的开发思维，容易上手，可以快速实现需求。<br>缺点：<br>当需要动态操作大量的dom节点时候简直就是灾难：当有业务需要由ajax返回的结果决定展示什么内容时，就需要用jQuery直接操作很多dom节点。这时候就比较考眼力了，需要在各种尖括号的标签之间看清楚字符串引号是单引号还是双引号…… 而且团队中的同学也很难看明白这一坨dom标签是想干嘛，难以维护。</p>
+<h2 id=""><a href="#" class="headerlink" title=""></a><a href="https://vuejs.org.cn/guide/" target="_blank" rel="external">Vue</a></h2><p>Vue是在下午吃水果时听到同事提起的，回来学习了一下后发现真的是个好东西：Vue支持响应式的数据双向绑定。在使用jQuery手工操作dom时，我们的代码常常是命令式的、重复的和易错的。Vue拥抱数据驱动视图的概念，我们可以把要操作的对象声明为一个Vue对象，同时在dom标签中用特殊的占位符（双大括号）在占位，这样就进行了绑定。每次修改Vue对象，dom中的元素会响应式的更新，同样也可以实时的拿到Vue对象中的值和服务端进行交互，再也不用熟记各种花式的jQuery选择器技巧了。</p>
+<p>总结：<br>Vue对于熟练Velocity的同学非常容易上手，它们都是使用了自己的标签进行占位。Vue只关注视图层，可以非常容易和jQuery、Bootstrap等其他框架共同使用。<br>优点：<br>双向绑定，与其他框架友好兼容，上手简单。<br>缺点：暂无。</p>
+<h2 id="-1"><a href="#-1" class="headerlink" title=""></a><a href="https://facebook.github.io/react/" target="_blank" rel="external">React</a></h2><p>React是现在最🔥的前端框架。首先要转变下思维：忘掉Velocity和Vue的模板+占位符的开发方式，使用React时要把web页面中的每一部分抽象成一个“组件”，每个组件都要抽出来一个函数单独实现渲染逻辑。最后再把这些渲染逻辑像搭积木一样堆起来，再去整体进行render。</p>
+<p>React中有一个非常重要的概念：状态中心，在我看来它就像是一个对外统一的接口，在渲染函数中可以用this.state取到各个属性的值，当使用this.setState修改属性值时，会进行dom diff，然后React自动调用render方法，再次渲染所有组件。</p>
+<p>使用React需要了解组件的生命周期的状态和对应的处理函数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">componentWillMount()</div><div class="line">componentDidMount()</div><div class="line">componentWillUpdate(object nextProps, object nextState)</div><div class="line">componentDidUpdate(object prevProps, object prevState)</div><div class="line">componentWillUnmount()</div></pre></td></tr></table></figure>
+<p>其中通过Ajax获取服务端数据，进行初始化state的方法要放在componentDidMount()中执行。考虑性能优化时需要实现另外的状态处理函数shouldComponentUpdate()。搭建复杂的页面需要学习redux。</p>
+<p>使用React可能是因为业务方觉得厂内的对React封装的那一套组件更好看一些，而且厂内的前端同学也在大力推广他们的新组件库，并且提供技术支持。但是对于后端同学来说，React似乎不是那么“友好”，需要学习理解和排坑的成本略高。遇到问题时可查询的资料不多。React不能直接简单操作dom(有麻烦的办法)，当想操作dom实现一个简单逻辑时比较困难。</p>
+<p>总结：<br>React适合那种dom类型和位置都确定的复杂页面，它支持数据的单向绑定，即修改state中的属性，然后自动的进行render。对于简单的页面来说，考虑到上手难度，有点得不偿失。但是这是未来的趋势嘛，学习一下还是很有必要的。<br>优点：<br>组件化、函数式、社区活跃<br>缺点：<br>学习成本高，上手难度大，排查问题困难</p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>本文没有讨论各种前端框架底层的实现，如Vue的底层实现和React的Virtual DOM哪个性能更好，仅仅是站在一个纯初级使用者的角度去谈谈自己在使用这些框架时的感受和理解。所以只能算是浮光掠影了。<br>如有理解错误的地方，欢迎讨论交流。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;前段时间有个比较🔥的文章 &lt;a href=&quot;https://zhuanlan.zhihu.com/p/22782487&quot;&gt;在2016年学JavaScript是一种什么样的体验&lt;/a&gt; 读完之后深深感受到了前端同学的痛点：用好各种框架、脚手架已经让人应接不暇了，与此同时还要不停地造自己的小轮子，着实不易。&lt;/p&gt;
+&lt;p&gt;在大学的有段时间，我也考虑过去做前端。因为所见即所得的东西还是很容易给人成就感的。后来只坚持学了半个学期就放弃了，主要因为一直没有搞懂，也记不住各种css标签的含义，这样导致每次在调样式的时候都无比捉急，连最基础的还原视觉稿都做不到。于是又悻悻的回到了黑框框的后端世界。&lt;/p&gt;
+&lt;p&gt;正式工作后也有机会接触一些前端的工作，在工作之余我总结了自己常用的开发模式和套路，分享给大家：&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="-- 前端 -- javascript" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF-javascript/"/>
+    
+  </entry>
   
   <entry>
     <title>啊，第一篇博客</title>

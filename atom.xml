@@ -4,9 +4,9 @@
   
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://yoursite.com/"/>
+  <link href="https://majiaji.github.io/"/>
   <updated>2016-11-26T11:32:45.000Z</updated>
-  <id>http://yoursite.com/</id>
+  <id>https://majiaji.github.io/</id>
   
   <author>
     <name>fantasy</name>
@@ -17,8 +17,8 @@
   
   <entry>
     <title>前端开发的浮光掠影</title>
-    <link href="http://yoursite.com/2016/11/23/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E7%9A%84%E6%B5%AE%E5%85%89%E6%8E%A0%E5%BD%B1/"/>
-    <id>http://yoursite.com/2016/11/23/前端开发的浮光掠影/</id>
+    <link href="https://majiaji.github.io/2016/11/23/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E7%9A%84%E6%B5%AE%E5%85%89%E6%8E%A0%E5%BD%B1/"/>
+    <id>https://majiaji.github.io/2016/11/23/前端开发的浮光掠影/</id>
     <published>2016-11-22T16:04:18.000Z</published>
     <updated>2016-11-26T11:32:45.000Z</updated>
     
@@ -50,19 +50,19 @@
     
     </summary>
     
-      <category term="前端" scheme="http://yoursite.com/categories/%E5%89%8D%E7%AB%AF/"/>
+      <category term="前端" scheme="https://majiaji.github.io/categories/%E5%89%8D%E7%AB%AF/"/>
     
     
-      <category term="前端" scheme="http://yoursite.com/tags/%E5%89%8D%E7%AB%AF/"/>
+      <category term="前端" scheme="https://majiaji.github.io/tags/%E5%89%8D%E7%AB%AF/"/>
     
-      <category term="javascript" scheme="http://yoursite.com/tags/javascript/"/>
+      <category term="javascript" scheme="https://majiaji.github.io/tags/javascript/"/>
     
   </entry>
   
   <entry>
     <title>啊，第一篇博客</title>
-    <link href="http://yoursite.com/2016/11/21/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/"/>
-    <id>http://yoursite.com/2016/11/21/第一篇博客/</id>
+    <link href="https://majiaji.github.io/2016/11/21/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/"/>
+    <id>https://majiaji.github.io/2016/11/21/第一篇博客/</id>
     <published>2016-11-21T07:06:25.000Z</published>
     <updated>2016-11-21T16:29:10.000Z</updated>
     
@@ -80,10 +80,10 @@
     
     </summary>
     
-      <category term="闲谈" scheme="http://yoursite.com/categories/%E9%97%B2%E8%B0%88/"/>
+      <category term="闲谈" scheme="https://majiaji.github.io/categories/%E9%97%B2%E8%B0%88/"/>
     
     
-      <category term="闲谈" scheme="http://yoursite.com/tags/%E9%97%B2%E8%B0%88/"/>
+      <category term="闲谈" scheme="https://majiaji.github.io/tags/%E9%97%B2%E8%B0%88/"/>
     
   </entry>
   

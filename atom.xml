@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://majiaji.github.io/"/>
-  <updated>2016-11-26T11:32:45.000Z</updated>
+  <updated>2016-12-04T06:25:45.000Z</updated>
   <id>https://majiaji.github.io/</id>
   
   <author>
@@ -14,6 +14,39 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>httpClient参数设置</title>
+    <link href="https://majiaji.github.io/2016/12/03/httpClient%E5%8F%82%E6%95%B0%E8%AE%BE%E7%BD%AE/"/>
+    <id>https://majiaji.github.io/2016/12/03/httpClient参数设置/</id>
+    <published>2016-12-02T17:27:28.000Z</published>
+    <updated>2016-12-04T06:25:45.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>httpClient是一个不考虑向下兼容的库，从3.x到4.x,几乎每个版本都有较大差异。本文使用的是4.5.2。</p>
+<p>httpClient是一个比较常用的库，客户端使用它，或者以它为底层的网络库来向服务端发http请求。通常为了简单，每次需要请求的时候都会new一个HttpClient实例出来，拿到结果后再close掉这个实例。</p>
+<p>但是对于服务端来说，在高并发的时候，每次new实例出来，在性能上是不可接受的。所以考虑所有的请求只用一个httpClient实例来搞定，这时候就需要好好check下这个httpClient的参数。</p>
+<a id="more"></a>
+<h2 id="参数设置"><a href="#参数设置" class="headerlink" title="参数设置"></a>参数设置</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">private</span> HttpClient httpClient;</div><div class="line"></div><div class="line">   <span class="meta">@PostConstruct</span></div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="comment">//连接池配置</span></div><div class="line">        PoolingHttpClientConnectionManager connectionManager = <span class="keyword">new</span> PoolingHttpClientConnectionManager();</div><div class="line">        <span class="comment">//最大并发连接数</span></div><div class="line">        connectionManager.setMaxTotal(<span class="number">500</span>);</div><div class="line">        <span class="comment">//每个url支持的并发连接数</span></div><div class="line">        connectionManager.setDefaultMaxPerRoute(<span class="number">200</span>);</div><div class="line">        <span class="comment">//超时配置</span></div><div class="line">        RequestConfig requestConfig = RequestConfig.custom()</div><div class="line">                <span class="comment">//从连接池中取连接</span></div><div class="line">                .setConnectionRequestTimeout(<span class="number">1000</span>)</div><div class="line">                <span class="comment">//进行连接</span></div><div class="line">                .setConnectTimeout(<span class="number">5000</span>)</div><div class="line">                <span class="comment">//socket读</span></div><div class="line">                .setSocketTimeout(<span class="number">5000</span>).build();</div><div class="line">        httpClient = HttpClients.custom()</div><div class="line">                .setDefaultRequestConfig(requestConfig)</div><div class="line">                .setConnectionManager(connectionManager)</div><div class="line">                .build();</div><div class="line">    &#125;</div><div class="line"></div></pre></td></tr></table></figure>
+<p>默认情况下，Per default this implementation will create no more than than 2 concurrent connections per given route and no more 20 connections in total。所以需要设置下总的连接数和每个route支持的连接数，否则当并发量大时，从连接池中取连接时会取不到，导致请求失败。</p>
+<p>使用httpClient最怕发生阻塞且没有超时返回的情况，所以需要根据自己的需求配置三个超时时间。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;httpClient是一个不考虑向下兼容的库，从3.x到4.x,几乎每个版本都有较大差异。本文使用的是4.5.2。&lt;/p&gt;
+&lt;p&gt;httpClient是一个比较常用的库，客户端使用它，或者以它为底层的网络库来向服务端发http请求。通常为了简单，每次需要请求的时候都会new一个HttpClient实例出来，拿到结果后再close掉这个实例。&lt;/p&gt;
+&lt;p&gt;但是对于服务端来说，在高并发的时候，每次new实例出来，在性能上是不可接受的。所以考虑所有的请求只用一个httpClient实例来搞定，这时候就需要好好check下这个httpClient的参数。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="后台" scheme="https://majiaji.github.io/categories/%E5%90%8E%E5%8F%B0/"/>
+    
+    
+      <category term="httpClient" scheme="https://majiaji.github.io/tags/httpClient/"/>
+    
+      <category term="后台" scheme="https://majiaji.github.io/tags/%E5%90%8E%E5%8F%B0/"/>
+    
+  </entry>
   
   <entry>
     <title>前端开发的浮光掠影</title>

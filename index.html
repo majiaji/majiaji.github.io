@@ -248,6 +248,162 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://majiaji.github.io/2016/12/04/Guava-BloomFilter/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="fantasy">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/uploads/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="fantasy's blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="fantasy's blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/12/04/Guava-BloomFilter/" itemprop="url">
+                  Guava BloomFilter
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-04T22:00:12+08:00">
+                2016-12-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/后台/" itemprop="url" rel="index">
+                    <span itemprop="name">后台</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2016/12/04/Guava-BloomFilter/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/04/Guava-BloomFilter/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="BloomFilter简介"><a href="#BloomFilter简介" class="headerlink" title="BloomFilter简介"></a>BloomFilter简介</h2><p>BloomFilter是一个可以快速判断一个元素是否在一个集合中的组件，它的设计也比较容易理解：构建的时候，一个元素经过几个hash函数hash后，命中一个bit数组的不同的位点，并把位点置为1。在判断的时候，也要执行同样的hash函数，只要有一个没有命中则这个元素一定不存在；否则有可能存在。只会有一种“误判”的情况：元素不在集合中，但被判断为在集合中。</p>
+<p>因为构建时候多个元素经过hash可能命中同样的位点，这样会影响判断时候的准确率。可以想象一下，bit数组越大，hash函数散列效果越好，这样“冲突”的概率越小，判断的正确率越高。但是，扩大bit数组会占用更多内存，hash函数计算复杂度和数量会影响计算速度。所以如何平衡正确率与bit数组长度、hash函数的个数呢？有一个公式：</p>
+<p>假设m是bit数组的bit的数量(长度)，k是hash函数的数量，n是在构造时元素的数量,p为判断时的错误率。则当它们满足下边两个公式时，有近似最优解。</p>
+<blockquote><ol>
+<li><p>m = -n * lnp / (ln2)^2 </p>
+</li>
+<li><p>k = m / n * ln2 </p>
+</li>
+</ol>
+</blockquote>
+<p>具体的推导过程可以看下<a href="https://en.wikipedia.org/wiki/Bloom_filter#Probability_of_false_positives">这里。</a><br>
+          <!--noindex-->
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/12/04/Guava-BloomFilter/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="https://majiaji.github.io/2016/12/03/httpClient参数设置/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -721,7 +877,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-count">4</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -738,7 +894,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

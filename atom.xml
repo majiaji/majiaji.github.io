@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://majiaji.github.io/"/>
-  <updated>2016-12-11T17:25:02.000Z</updated>
+  <updated>2016-12-11T17:28:32.000Z</updated>
   <id>https://majiaji.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://majiaji.github.io/2016/12/11/Guava-Cache/"/>
     <id>https://majiaji.github.io/2016/12/11/Guava-Cache/</id>
     <published>2016-12-11T05:31:42.000Z</published>
-    <updated>2016-12-11T17:25:02.000Z</updated>
+    <updated>2016-12-11T17:28:32.000Z</updated>
     
     <content type="html"><![CDATA[<h2 id="Guava-Cache简介"><a href="#Guava-Cache简介" class="headerlink" title="Guava Cache简介"></a>Guava Cache简介</h2><p>Local Cache是比较常用的后端开发“组件”，Guava中的Cache是一个很实用的Local Cache的实现，它支持下列特性：</p>
 <ul>
@@ -44,7 +44,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">isExpired</span><span class="params">(ReferenceEntry&lt;K, V&gt; entry, <span class="keyword">long</span> now)</span> </span>&#123;</div><div class="line">   checkNotNull(entry);</div><div class="line">   <span class="keyword">if</span> (expiresAfterAccess()</div><div class="line">       &amp;&amp; (now - entry.getAccessTime() &gt;= expireAfterAccessNanos)) &#123;</div><div class="line">     <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">   &#125;</div><div class="line">   <span class="keyword">if</span> (expiresAfterWrite()</div><div class="line">       &amp;&amp; (now - entry.getWriteTime() &gt;= expireAfterWriteNanos)) &#123;</div><div class="line">     <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">   &#125;</div><div class="line">   <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line"> &#125;</div><div class="line"></div></pre></td></tr></table></figure>
 <p>这样的话，如果用了refreshAfterWrite，在load完一个值之后，过了很久同时来了一拨并发请求，那么大量请求都会拿到旧的值，可能会导致业务上的问题。不过这种场景也是有点略奇葩，不太常见。所以在使用各个特性时一定要结合自己的业务，如果不确定最好先写个小的demo试一下。最后再提一下，expireAfterWrite和refreshAfterWrite是可以一起使用的，官方文档中也有说明:<br><blockquote><p>In contrast to expireAfterWrite, refreshAfterWrite will make a key eligible for refresh after the specified duration, but a refresh will only be actually initiated when the entry is queried. (If CacheLoader.reload is implemented to be asynchronous, then the query will not be slowed down by the refresh.) So, for example, you can specify both refreshAfterWrite and expireAfterWrite on the same cache, so that the expiration timer on an entry isn’t blindly reset whenever an entry becomes eligible for a refresh, so if an entry isn’t queried after it comes eligible for refreshing, it is allowed to expire.</p>
 </blockquote></p>
-<p>Guava Cache的设计是很好的，但是感觉实现上不够“优雅”，代码读起来有点难受，整个是一个猜测-&gt;验证-&gt;明白的学习过程。如果有问题欢迎讨论交流~</p>
+<p>Guava Cache的设计是很好的，但是感觉实现上不够“优雅”，代码读起来有点难受，整个学习过程是猜测-&gt;验证-&gt;明白。如果有问题欢迎讨论交流~</p>
 ]]></content>
     
     <summary type="html">

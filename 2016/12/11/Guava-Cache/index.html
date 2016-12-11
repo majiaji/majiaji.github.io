@@ -1,0 +1,764 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.css" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Guava,后台," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="fantasy's blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Guava Cache简介Local Cache是比较常用的后端开发“组件”，Guava中的Cache是一个很实用的Local Cache的实现，它支持下列特性：
+
+automatic loading of entries into the cache
+least-recently-used eviction when a maximum size is exceeded
+time-based e">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Guava Cache">
+<meta property="og:url" content="https://majiaji.github.io/2016/12/11/Guava-Cache/index.html">
+<meta property="og:site_name" content="fantasy's blog">
+<meta property="og:description" content="Guava Cache简介Local Cache是比较常用的后端开发“组件”，Guava中的Cache是一个很实用的Local Cache的实现，它支持下列特性：
+
+automatic loading of entries into the cache
+least-recently-used eviction when a maximum size is exceeded
+time-based e">
+<meta property="og:updated_time" content="2016-12-11T17:25:02.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Guava Cache">
+<meta name="twitter:description" content="Guava Cache简介Local Cache是比较常用的后端开发“组件”，Guava中的Cache是一个很实用的Local Cache的实现，它支持下列特性：
+
+automatic loading of entries into the cache
+least-recently-used eviction when a maximum size is exceeded
+time-based e">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://majiaji.github.io/2016/12/11/Guava-Cache/"/>
+
+
+
+
+
+  <title> Guava Cache | fantasy's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=59590173";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">fantasy's blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://majiaji.github.io/2016/12/11/Guava-Cache/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="fantasy">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/uploads/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="fantasy's blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="fantasy's blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Guava Cache
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-11T13:31:42+08:00">
+                2016-12-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/后台/" itemprop="url" rel="index">
+                    <span itemprop="name">后台</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2016/12/11/Guava-Cache/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/11/Guava-Cache/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Guava-Cache简介"><a href="#Guava-Cache简介" class="headerlink" title="Guava Cache简介"></a>Guava Cache简介</h2><p>Local Cache是比较常用的后端开发“组件”，Guava中的Cache是一个很实用的Local Cache的实现，它支持下列特性：</p>
+<ul>
+<li>automatic loading of entries into the cache</li>
+<li>least-recently-used eviction when a maximum size is exceeded</li>
+<li>time-based expiration of entries, measured since last access or last write</li>
+<li>keys automatically wrapped in weak references</li>
+<li>values automatically wrapped in weak or soft references</li>
+<li>notification of evicted (or otherwise removed) entries</li>
+<li>accumulation of cache access statistics</li>
+</ul>
+<p>这些特性都是可选的，可在初始化时的建造者模式中进行配置。<br>今天主要根据源码来讲一下Guava Cache（19.0）的实现，具体的应用方法可以参考<a href="https://github.com/google/guava/wiki/CachesExplained" target="_blank" rel="external">官方文档</a>。</p>
+<a id="more"></a>
+<h2 id="源码分析"><a href="#源码分析" class="headerlink" title="源码分析"></a>源码分析</h2><h3 id="“过期”策略介绍"><a href="#“过期”策略介绍" class="headerlink" title="“过期”策略介绍"></a>“过期”策略介绍</h3><p>在讲源码之前首先介绍两个常用的过期策略：expireAfterWrite和refreshAfterWrite。这两个策略都能保证在本地缓存过期时，只有一个线程去加载后端资源（远端缓存或者db)。不同的是，在加载资源时，expireAfterWrite会让所有的线程阻塞等待新值返回,然后返回加载好的新值；而refreshAfterWrite在一个线程去拿新值的同时，其他线程先直接返回旧值，不阻塞。</p>
+<p>get方法主要实现了上述逻辑。</p>
+<h3 id="get分析"><a href="#get分析" class="headerlink" title="get分析"></a>get分析</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// loading</span></div><div class="line"></div><div class="line">     <span class="function">V <span class="title">get</span><span class="params">(K key, <span class="keyword">int</span> hash, CacheLoader&lt;? <span class="keyword">super</span> K, V&gt; loader)</span> <span class="keyword">throws</span> ExecutionException </span>&#123;</div><div class="line">      checkNotNull(key);</div><div class="line">      checkNotNull(loader);</div><div class="line">      <span class="keyword">try</span> &#123;</div><div class="line">        <span class="comment">//count是这个segment中“存活”的元素数量，第一次命中时为0</span></div><div class="line">        <span class="keyword">if</span> (count != <span class="number">0</span>) &#123; <span class="comment">// read-volatile</span></div><div class="line">          <span class="comment">// don't call getLiveEntry, which would ignore loading values</span></div><div class="line">          ReferenceEntry&lt;K, V&gt; e = getEntry(key, hash);</div><div class="line">          <span class="keyword">if</span> (e != <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">long</span> now = map.ticker.read();</div><div class="line">            <span class="comment">//获取有效的，且没有过期的值</span></div><div class="line">            V value = getLiveValue(e, now);</div><div class="line">            <span class="keyword">if</span> (value != <span class="keyword">null</span>) &#123;</div><div class="line">              <span class="comment">//CacheStats打点记录</span></div><div class="line">              recordRead(e, now);</div><div class="line">              statsCounter.recordHits(<span class="number">1</span>);</div><div class="line">              <span class="comment">//refresh的逻辑，不阻塞先返回旧值</span></div><div class="line">              <span class="keyword">return</span> scheduleRefresh(e, key, hash, value, now, loader);</div><div class="line">            &#125;</div><div class="line">            ValueReference&lt;K, V&gt; valueReference = e.getValueReference();</div><div class="line">            <span class="keyword">if</span> (valueReference.isLoading()) &#123;</div><div class="line">              <span class="comment">//已经有一个线程去load了，这里同步等待返回的新值</span></div><div class="line">              <span class="keyword">return</span> waitForLoadingValue(e, key, valueReference);</div><div class="line">            &#125;</div><div class="line">          &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// at this point e is either null or expired;</span></div><div class="line">        <span class="comment">//拿锁并返回已经存在的值，或者进行同步的load</span></div><div class="line">        <span class="keyword">return</span> lockedGetOrLoad(key, hash, loader);</div><div class="line">      &#125; <span class="keyword">catch</span> (ExecutionException ee) &#123;</div><div class="line">        Throwable cause = ee.getCause();</div><div class="line">        <span class="keyword">if</span> (cause <span class="keyword">instanceof</span> Error) &#123;</div><div class="line">          <span class="keyword">throw</span> <span class="keyword">new</span> ExecutionError((Error) cause);</div><div class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (cause <span class="keyword">instanceof</span> RuntimeException) &#123;</div><div class="line">          <span class="keyword">throw</span> <span class="keyword">new</span> UncheckedExecutionException(cause);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">throw</span> ee;</div><div class="line">      &#125; <span class="keyword">finally</span> &#123;</div><div class="line">        postReadCleanup();</div><div class="line">      &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>get中的scheduleRefresh:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function">V <span class="title">scheduleRefresh</span><span class="params">(ReferenceEntry&lt;K, V&gt; entry, K key, <span class="keyword">int</span> hash, V oldValue, <span class="keyword">long</span> now,</span></span></div><div class="line">       CacheLoader&lt;? <span class="keyword">super</span> K, V&gt; loader) &#123;</div><div class="line">     <span class="keyword">if</span> (map.refreshes() &amp;&amp; (now - entry.getWriteTime() &gt; map.refreshNanos)</div><div class="line">         &amp;&amp; !entry.getValueReference().isLoading()) &#123;</div><div class="line">         <span class="comment">//如果没有线程在loading，则去load新值</span></div><div class="line">       V newValue = refresh(key, hash, loader, <span class="keyword">true</span>);</div><div class="line">       <span class="keyword">if</span> (newValue != <span class="keyword">null</span>) &#123;</div><div class="line">         <span class="keyword">return</span> newValue;</div><div class="line">       &#125;</div><div class="line">     &#125;</div><div class="line">     <span class="comment">//否则直接返回旧值</span></div><div class="line">     <span class="keyword">return</span> oldValue;</div><div class="line">   &#125;</div><div class="line"></div></pre></td></tr></table></figure><br>get中的lockedGetOrLoad:<br>一般第一次加载某个key对应的value，或者expireAfterWrite策略中value过期时会进入到这个函数。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function">V <span class="title">lockedGetOrLoad</span><span class="params">(K key, <span class="keyword">int</span> hash, CacheLoader&lt;? <span class="keyword">super</span> K, V&gt; loader)</span></span></div><div class="line">        <span class="keyword">throws</span> ExecutionException &#123;</div><div class="line">      ReferenceEntry&lt;K, V&gt; e;</div><div class="line">      ValueReference&lt;K, V&gt; valueReference = <span class="keyword">null</span>;</div><div class="line">      LoadingValueReference&lt;K, V&gt; loadingValueReference = <span class="keyword">null</span>;</div><div class="line">      <span class="keyword">boolean</span> createNewEntry = <span class="keyword">true</span>;</div><div class="line"></div><div class="line">      lock();</div><div class="line">      <span class="keyword">try</span> &#123;</div><div class="line">        <span class="comment">// re-read ticker once inside the lock</span></div><div class="line">        <span class="keyword">long</span> now = map.ticker.read();</div><div class="line">        preWriteCleanup(now);</div><div class="line"></div><div class="line">        <span class="keyword">int</span> newCount = <span class="keyword">this</span>.count - <span class="number">1</span>;</div><div class="line">        AtomicReferenceArray&lt;ReferenceEntry&lt;K, V&gt;&gt; table = <span class="keyword">this</span>.table;</div><div class="line">        <span class="keyword">int</span> index = hash &amp; (table.length() - <span class="number">1</span>);</div><div class="line">        ReferenceEntry&lt;K, V&gt; first = table.get(index);</div><div class="line"></div><div class="line">        <span class="comment">//找到元素判断是否过期，返回或者执行清理</span></div><div class="line">        <span class="keyword">for</span> (e = first; e != <span class="keyword">null</span>; e = e.getNext()) &#123;</div><div class="line">          K entryKey = e.getKey();</div><div class="line">          <span class="keyword">if</span> (e.getHash() == hash &amp;&amp; entryKey != <span class="keyword">null</span></div><div class="line">              &amp;&amp; map.keyEquivalence.equivalent(key, entryKey)) &#123;</div><div class="line">            valueReference = e.getValueReference();</div><div class="line">            <span class="keyword">if</span> (valueReference.isLoading()) &#123;</div><div class="line">              createNewEntry = <span class="keyword">false</span>;</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">              V value = valueReference.get();</div><div class="line">              <span class="keyword">if</span> (value == <span class="keyword">null</span>) &#123;</div><div class="line">                enqueueNotification(entryKey, hash, valueReference, RemovalCause.COLLECTED);</div><div class="line">              &#125; <span class="keyword">else</span> <span class="keyword">if</span> (map.isExpired(e, now)) &#123;</div><div class="line">                <span class="comment">// This is a duplicate check, as preWriteCleanup already purged expired</span></div><div class="line">                <span class="comment">// entries, but let's accomodate an incorrect expiration queue.</span></div><div class="line">                enqueueNotification(entryKey, hash, valueReference, RemovalCause.EXPIRED);</div><div class="line">              &#125; <span class="keyword">else</span> &#123;</div><div class="line">                recordLockedRead(e, now);</div><div class="line">                statsCounter.recordHits(<span class="number">1</span>);</div><div class="line">                <span class="comment">// we were concurrent with loading; don't consider refresh</span></div><div class="line">                <span class="keyword">return</span> value;</div><div class="line">              &#125;</div><div class="line"></div><div class="line">              <span class="comment">// immediately reuse invalid entries</span></div><div class="line">              writeQueue.remove(e);</div><div class="line">              accessQueue.remove(e);</div><div class="line">              <span class="keyword">this</span>.count = newCount; <span class="comment">// write-volatile</span></div><div class="line">            &#125;</div><div class="line">            <span class="keyword">break</span>;</div><div class="line">          &#125;</div><div class="line">        &#125;</div><div class="line"><span class="comment">//新建的元素，先做一些初始化的动作</span></div><div class="line">        <span class="keyword">if</span> (createNewEntry) &#123;</div><div class="line">          loadingValueReference = <span class="keyword">new</span> LoadingValueReference&lt;K, V&gt;();</div><div class="line"></div><div class="line">          <span class="keyword">if</span> (e == <span class="keyword">null</span>) &#123;</div><div class="line">            e = newEntry(key, hash, first);</div><div class="line">            e.setValueReference(loadingValueReference);</div><div class="line">            table.set(index, e);</div><div class="line">          &#125; <span class="keyword">else</span> &#123;</div><div class="line">            e.setValueReference(loadingValueReference);</div><div class="line">          &#125;</div><div class="line">        &#125;</div><div class="line">      &#125; <span class="keyword">finally</span> &#123;</div><div class="line">        unlock();</div><div class="line">        postWriteCleanup();</div><div class="line">      &#125;</div><div class="line"></div><div class="line"><span class="comment">//新建的元素，同步去远端load值</span></div><div class="line">      <span class="keyword">if</span> (createNewEntry) &#123;</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">          <span class="comment">// Synchronizes on the entry to allow failing fast when a recursive load is</span></div><div class="line">          <span class="comment">// detected. This may be circumvented when an entry is copied, but will fail fast most</span></div><div class="line">          <span class="comment">// of the time.</span></div><div class="line">          <span class="keyword">synchronized</span> (e) &#123;</div><div class="line">            <span class="keyword">return</span> loadSync(key, hash, loadingValueReference, loader);</div><div class="line">          &#125;</div><div class="line">        &#125; <span class="keyword">finally</span> &#123;</div><div class="line">          statsCounter.recordMisses(<span class="number">1</span>);</div><div class="line">        &#125;</div><div class="line">      &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="comment">// The entry already exists. Wait for loading.</span></div><div class="line">        <span class="comment">//否则阻塞等待别的线程load</span></div><div class="line">        <span class="keyword">return</span> waitForLoadingValue(e, key, valueReference);</div><div class="line">      &#125;</div><div class="line">    &#125; </div></pre></td></tr></table></figure></p>
+<p>get中的waitForLoadingValue:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="function">V <span class="title">waitForLoadingValue</span><span class="params">(ReferenceEntry&lt;K, V&gt; e, K key, ValueReference&lt;K, V&gt; valueReference)</span></span></div><div class="line">       <span class="keyword">throws</span> ExecutionException &#123;</div><div class="line">     <span class="keyword">if</span> (!valueReference.isLoading()) &#123;</div><div class="line">       <span class="keyword">throw</span> <span class="keyword">new</span> AssertionError();</div><div class="line">     &#125;</div><div class="line"></div><div class="line">     checkState(!Thread.holdsLock(e), <span class="string">"Recursive load of: %s"</span>, key);</div><div class="line">     <span class="comment">// don't consider expiration as we're concurrent with loading</span></div><div class="line">     <span class="keyword">try</span> &#123;</div><div class="line">      <span class="comment">//getUninterruptibly同步获取</span></div><div class="line">       V value = valueReference.waitForValue();</div><div class="line">       <span class="keyword">if</span> (value == <span class="keyword">null</span>) &#123;</div><div class="line">         <span class="keyword">throw</span> <span class="keyword">new</span> InvalidCacheLoadException(<span class="string">"CacheLoader returned null for key "</span> + key + <span class="string">"."</span>);</div><div class="line">       &#125;</div><div class="line">       <span class="comment">// re-read ticker now that loading has completed</span></div><div class="line">       <span class="keyword">long</span> now = map.ticker.read();</div><div class="line">       recordRead(e, now);</div><div class="line">       <span class="keyword">return</span> value;</div><div class="line">     &#125; <span class="keyword">finally</span> &#123;</div><div class="line">       statsCounter.recordMisses(<span class="number">1</span>);</div><div class="line">     &#125;</div><div class="line">   &#125;</div><div class="line"></div></pre></td></tr></table></figure><br>这里需要注意，如果在guava cache中，去远端load回结果为null，这时不会返回null，而是直接抛异常InvalidCacheLoadException出来。在db操作中，load结果为null是很常见的，所以一定要注意处理这点。</p>
+<p>目前的解决办法是，拿到db返回结果时先判断下是否为null，如果为null则返回一个空对象出去。外边函数拿到get的结果后先取这个对象的一个属性，比如一个DO的id，判断是否为null，如果为null则返回null，否则返回对象本身。</p>
+<h2 id="思考和总结"><a href="#思考和总结" class="headerlink" title="思考和总结"></a>思考和总结</h2><p>从代码中可以看出，Guava Cache不管是哪种过期策略，都是触发式的：即每一次的过期和reload动作都依赖外部的请求。所谓的refresh并不是自己起了一个线程去不停的reload。在getLiveValue方法中判断过期元素也不包括refresh策略：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">isExpired</span><span class="params">(ReferenceEntry&lt;K, V&gt; entry, <span class="keyword">long</span> now)</span> </span>&#123;</div><div class="line">   checkNotNull(entry);</div><div class="line">   <span class="keyword">if</span> (expiresAfterAccess()</div><div class="line">       &amp;&amp; (now - entry.getAccessTime() &gt;= expireAfterAccessNanos)) &#123;</div><div class="line">     <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">   &#125;</div><div class="line">   <span class="keyword">if</span> (expiresAfterWrite()</div><div class="line">       &amp;&amp; (now - entry.getWriteTime() &gt;= expireAfterWriteNanos)) &#123;</div><div class="line">     <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">   &#125;</div><div class="line">   <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line"> &#125;</div><div class="line"></div></pre></td></tr></table></figure>
+<p>这样的话，如果用了refreshAfterWrite，在load完一个值之后，过了很久同时来了一拨并发请求，那么大量请求都会拿到旧的值，可能会导致业务上的问题。不过这种场景也是有点略奇葩，不太常见。所以在使用各个特性时一定要结合自己的业务，如果不确定最好先写个小的demo试一下。最后再提一下，expireAfterWrite和refreshAfterWrite是可以一起使用的，官方文档中也有说明:<br><blockquote><p>In contrast to expireAfterWrite, refreshAfterWrite will make a key eligible for refresh after the specified duration, but a refresh will only be actually initiated when the entry is queried. (If CacheLoader.reload is implemented to be asynchronous, then the query will not be slowed down by the refresh.) So, for example, you can specify both refreshAfterWrite and expireAfterWrite on the same cache, so that the expiration timer on an entry isn’t blindly reset whenever an entry becomes eligible for a refresh, so if an entry isn’t queried after it comes eligible for refreshing, it is allowed to expire.</p>
+</blockquote></p>
+<p>Guava Cache的设计是很好的，但是感觉实现上不够“优雅”，代码读起来有点难受，整个是一个猜测-&gt;验证-&gt;明白的学习过程。如果有问题欢迎讨论交流~</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Guava/" rel="tag"># Guava</a>
+          
+            <a href="/tags/后台/" rel="tag"># 后台</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/04/Guava-BloomFilter/" rel="next" title="Guava BloomFilter">
+                <i class="fa fa-chevron-left"></i> Guava BloomFilter
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/12/11/Guava-Cache/"
+     data-title="Guava Cache"
+     data-content=""
+     data-url="https://majiaji.github.io/2016/12/11/Guava-Cache/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/12/11/Guava-Cache/"
+           data-title="Guava Cache" data-url="https://majiaji.github.io/2016/12/11/Guava-Cache/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="fantasy" />
+          <p class="site-author-name" itemprop="name">fantasy</p>
+          <p class="site-description motion-element" itemprop="description">一只正在努力的鶸</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/majiaji" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="/about" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Guava-Cache简介"><span class="nav-number">1.</span> <span class="nav-text">Guava Cache简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#源码分析"><span class="nav-number">2.</span> <span class="nav-text">源码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#“过期”策略介绍"><span class="nav-number">2.1.</span> <span class="nav-text">“过期”策略介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#get分析"><span class="nav-number">2.2.</span> <span class="nav-text">get分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#思考和总结"><span class="nav-number">3.</span> <span class="nav-text">思考和总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fantasy</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"majiaji"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="//cdn.jsdelivr.net/ua-parser.js/0.7.10/ua-parser.min.js"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

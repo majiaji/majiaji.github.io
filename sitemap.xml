@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://majiaji.github.io/2016/12/11/Guava-Cache/</loc>
+    
+    <lastmod>2016-12-11T17:25:02.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://majiaji.github.io/2016/12/04/Guava-BloomFilter/</loc>
     
     <lastmod>2016-12-04T17:30:08.000Z</lastmod>

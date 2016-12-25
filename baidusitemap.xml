@@ -4,8 +4,28 @@
 
     
   <url>
+    <loc>https://majiaji.github.io/2016/12/25/%E7%90%86%E8%A7%A3%E5%9B%9E%E8%B0%83/</loc>
+    <lastmod>2016-12-25T15:59:58.000Z</lastmod>
+    <data>
+        <display>
+        <title>理解回调机制</title>
+        <pubTime>2016-12-25T11:27:57.000Z</pubTime>
+        
+        <tag>后台</tag>
+         
+         
+           
+             
+              <breadCrumb title="后台" url="https://majiaji.github.io/categories/%E5%90%8E%E5%8F%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://majiaji.github.io/2016/12/24/%E9%95%BF%E8%BF%9E%E6%8E%A5%E9%80%9A%E9%81%93%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</loc>
-    <lastmod>2016-12-25T04:43:21.000Z</lastmod>
+    <lastmod>2016-12-25T06:31:47.000Z</lastmod>
     <data>
         <display>
         <title>长连接通道解决方案</title>

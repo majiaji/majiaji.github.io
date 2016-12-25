@@ -248,6 +248,156 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://majiaji.github.io/2016/12/24/长连接通道解决方案/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="fantasy">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/uploads/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="fantasy's blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="fantasy's blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2016/12/24/长连接通道解决方案/" itemprop="url">
+                  长连接通道解决方案
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-24T14:27:07+08:00">
+                2016-12-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/后台/" itemprop="url" rel="index">
+                    <span itemprop="name">后台</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2016/12/24/长连接通道解决方案/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/24/长连接通道解决方案/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="为什么要长连接"><a href="#为什么要长连接" class="headerlink" title="为什么要长连接"></a>为什么要长连接</h2><h3 id="资源中心or控制中心"><a href="#资源中心or控制中心" class="headerlink" title="资源中心or控制中心"></a>资源中心or控制中心</h3><p>很久以来，服务端一直作为“统一资源中心”而存在，所以后台开发工程师们的基础工作就是存储、维护和管理用户的数据，然后开接口给客户端&amp;&amp;前端同学使用。后来出现了restful架构风格：一个URI代表一个资源，客户端用HTTP协议的操作方式（GET、POST、PUT、DELETE）对资源进行操作，即完成了与服务端的交互。这样的设计可以让服务端的逻辑变得非常的轻，真的变成了“资源中心”了。客户端可以依托操作资源的接口去实现真正的业务逻辑，渲染界面。考虑到一些异常情况处理，逻辑会做的比较重。</p>
+<p>对于后台开发同学来说，一定不会满足于“资源管理者”这样的角色，每天写写增删改查和字符串拼接。因为有长连接技术的存在，服务端可以做更多的事情。相对于客户端把服务端当成“数据资源库”，反过来，服务端也可以把客户端看成“UI库”，通过长连接通道推送命令下去，指导客户端UI进行变化。这样服务端就从“资源中心”变成了“控制中心”。当然这是一种比较极端的设计，长连接可能因为网络或者客户端环境问题断掉，这样控制中心就失去控制能力了。所以在实现业务时可以用推拉结合的模式。</p>
+<h3 id="即时触达的能力"><a href="#即时触达的能力" class="headerlink" title="即时触达的能力"></a>即时触达的能力</h3><p>因为有了长连接通道，服务端有了消息即时触达的能力，同时避免了客户端分布式攻击式的轮询。这个能力是非常非常重要的，在设计在线网络游戏、IM系统、推送系统时长连接通道不可或缺。</p>
+<h3 id="业界通用推送方法"><a href="#业界通用推送方法" class="headerlink" title="业界通用推送方法"></a>业界通用推送方法</h3><p>现在移动端都有自己的push系统，iOS有<a href="https://developer.apple.com/notifications/">APNS(Apple Push Notification service)</a>,Android有<a href="https://developers.google.com/cloud-messaging/?hl=zh-cn/">GCM(Google Cloud Messaging)</a>。可以简单理解为官方的一个服务和移动客户端建立了一个长连接，所有的app共用这条通道，每次推送时要用自己的服务调用一下官方服务的接口，然后由官方的服务进行推送，客户端收到推送后会在系统通知栏看到app推送的一个概要信息，用户点击这条push,会唤起对应的app，进入app后会调用app自己的服务接口拉取更多的业务数据。</p>
+<p>因为哈哈哈哈的原因，GCM在国内几乎不能使用；如果应用有pc端还要支持pc端的推送;业务比较复杂时会希望设计一种更高效灵活的推送协议。基于以上原因，开发者会设计自己的长连接通道和推送协议。</p>
+          <!--noindex-->
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/12/24/长连接通道解决方案/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
   <link itemprop="mainEntityOfPage" href="https://majiaji.github.io/2016/12/11/Guava-Cache/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1033,7 +1183,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-count">6</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1050,7 +1200,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

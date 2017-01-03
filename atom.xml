@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://majiaji.github.io/"/>
-  <updated>2016-12-25T15:59:58.000Z</updated>
+  <updated>2017-01-03T16:13:47.000Z</updated>
   <id>https://majiaji.github.io/</id>
   
   <author>
@@ -14,6 +14,60 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>2016年总结</title>
+    <link href="https://majiaji.github.io/2016/12/31/2016%E5%B9%B4%E6%80%BB%E7%BB%93/"/>
+    <id>https://majiaji.github.io/2016/12/31/2016年总结/</id>
+    <published>2016-12-30T16:28:14.000Z</published>
+    <updated>2017-01-03T16:13:47.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>2016年的最后一天，坐下来聊一聊和2016有关的事情和感想。</p>
+<p>话说算上实习，今年已经工作两年了。一起来杭州的大学室友蛋蛋跑去了北京，我们同寝的时间定格在了五年。每次回来都会感觉不太习惯，少了一个愿意听我bb的人、愿意和我bb的人。蛋蛋是一个很善良的人，我一直担心他社会经验不足，不厌其烦的跟他聊我在北京时的一点点经验，后来发现我真是多虑了。蛋蛋到了北京后执行力爆表，迅速的找到了蛋妹，过上了幸福的生活。临走那天送给蛋蛋的祝福很快成真，也是一件很开心的事情。</p>
+<p>女盆友和家人在不同的两个远方，几乎所有的假期和年假都是和他们一起度过的。经常深圳郑州两边跑，虽然路途辛苦(主要锅在hz交通)，但是能见到他们还是很开心的。新的一年希望能有时间带他们出去走走，更希望自己有能力早点在异乡有我们的家🏠。</p>
+<a id="more"></a>
+<h3 id="工作"><a href="#工作" class="headerlink" title="工作"></a>工作</h3><p>工作方面，2016年自己成长了许多，最大的变化是自己面对各种问题时多了一份从容，问题解决后也会有思考和总结。只是开始写博客的时间太晚了，踩过的坑和学到的东西没有尽数记录下来。这是今年的一点小遗憾吧。</p>
+<p>今年前半段时间有些浮躁，会为一些小成就而自满，放松自己。还好最近一段时间遭受了一些打击，终于能沉下心来看一些之前看不下去的书了。现在我已经非常确定了自己的发展方向，会坚持的走下去。希望自己未来能在这个领域能有所贡献。</p>
+<p>感谢周围同事耐心的指导，从你们身上我学到了很多，我有了自己的榜样和看齐的对象。</p>
+<p>工作是为了生活，但兴趣也是很重要的。在工作之余的时间我做了一些小组件，放在了git上。希望新的一年能多做一些更有趣的东西。</p>
+<h3 id="生活"><a href="#生活" class="headerlink" title="生活"></a>生活</h3><h4 id="旅行"><a href="#旅行" class="headerlink" title="旅行"></a>旅行</h4><p>今年去了好多地方：杭州、绍兴、舟山、千岛湖、深圳 x 3、香港、上海、成都、广州、横店、北京、郑州 x 2、乌镇。和我同行的人，比我到的地方更重要。</p>
+<p>2017年，也要考虑带妹子回家，还有去妹子家的事情了。还计划和妹子去一下日本，正在准备中。</p>
+<h4 id="电影"><a href="#电影" class="headerlink" title="电影"></a>电影</h4><p>今年看过的觉得很赞的电影:<br>我的少女时代、火星救援、师父、寻龙诀、唐人街探案、美国队长3、死侍、科洛弗道10号、夏洛特烦恼、垫底辣妹、疯狂动物城、美人鱼、火影忍者剧场版：博人转、老炮儿、小姐、魔兽、火锅英雄、追凶者也、七月与安生、釜山行、驴得水、你的名字。</p>
+<p>前段时间忽然明白为什么说“艺术是比科学更高一层的存在”了，假如不学计算机的话，我应该想去学编辑或者导演吧、或者学作曲也可以的😌……(醒一醒)</p>
+<p>今年还看过两部非常棒的剧：</p>
+<ol>
+<li>李狗嗨(legal high)：胜利即正义！</li>
+<li>西部世界(west world):Bring yourself back online.</li>
+</ol>
+<h4 id="身体"><a href="#身体" class="headerlink" title="身体"></a>身体</h4><p>今年身体比去年更差了一些（难道高中时期真的是巅峰吗），每天对着电脑，视力下降了一些。上个月有段时间每到晚上眼睛都疼睁不开，坐了很久背也会有点疼。还好体检结果没有什么大问题，比上学时候胖了一些。</p>
+<p>措施：坚持每天骑车上下班🚴。每周末坚持运动，篮球或者跑步，有机会去游泳。每天争取12点前睡觉。</p>
+<h3 id="2017的期待"><a href="#2017的期待" class="headerlink" title="2017的期待"></a>2017的期待</h3><p>新的一年，有很多事情要做：</p>
+<ol>
+<li>努力学习，点满后端技能树，并尝试进阶</li>
+<li>每周至少一篇博客，技术总结 or 生活点滴</li>
+<li>多回家看看，多陪陪女盆友</li>
+<li>想学一门弦乐器，乌克丽丽或者吉他</li>
+<li>学会做饭，能在周末自给自足</li>
+<li>买个小车</li>
+<li>早睡</li>
+</ol>
+<p>愿2017一切更好，新年快乐~~~</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;2016年的最后一天，坐下来聊一聊和2016有关的事情和感想。&lt;/p&gt;
+&lt;p&gt;话说算上实习，今年已经工作两年了。一起来杭州的大学室友蛋蛋跑去了北京，我们同寝的时间定格在了五年。每次回来都会感觉不太习惯，少了一个愿意听我bb的人、愿意和我bb的人。蛋蛋是一个很善良的人，我一直担心他社会经验不足，不厌其烦的跟他聊我在北京时的一点点经验，后来发现我真是多虑了。蛋蛋到了北京后执行力爆表，迅速的找到了蛋妹，过上了幸福的生活。临走那天送给蛋蛋的祝福很快成真，也是一件很开心的事情。&lt;/p&gt;
+&lt;p&gt;女盆友和家人在不同的两个远方，几乎所有的假期和年假都是和他们一起度过的。经常深圳郑州两边跑，虽然路途辛苦(主要锅在hz交通)，但是能见到他们还是很开心的。新的一年希望能有时间带他们出去走走，更希望自己有能力早点在异乡有我们的家🏠。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="闲谈" scheme="https://majiaji.github.io/categories/%E9%97%B2%E8%B0%88/"/>
+    
+    
+      <category term="闲谈" scheme="https://majiaji.github.io/tags/%E9%97%B2%E8%B0%88/"/>
+    
+  </entry>
   
   <entry>
     <title>理解回调机制</title>
@@ -169,9 +223,9 @@
       <category term="后台" scheme="https://majiaji.github.io/categories/%E5%90%8E%E5%8F%B0/"/>
     
     
-      <category term="Guava" scheme="https://majiaji.github.io/tags/Guava/"/>
-    
       <category term="后台" scheme="https://majiaji.github.io/tags/%E5%90%8E%E5%8F%B0/"/>
+    
+      <category term="Guava" scheme="https://majiaji.github.io/tags/Guava/"/>
     
   </entry>
   
@@ -230,9 +284,9 @@
       <category term="后台" scheme="https://majiaji.github.io/categories/%E5%90%8E%E5%8F%B0/"/>
     
     
-      <category term="Guava" scheme="https://majiaji.github.io/tags/Guava/"/>
-    
       <category term="后台" scheme="https://majiaji.github.io/tags/%E5%90%8E%E5%8F%B0/"/>
+    
+      <category term="Guava" scheme="https://majiaji.github.io/tags/Guava/"/>
     
   </entry>
   
@@ -263,9 +317,9 @@
       <category term="后台" scheme="https://majiaji.github.io/categories/%E5%90%8E%E5%8F%B0/"/>
     
     
-      <category term="后台" scheme="https://majiaji.github.io/tags/%E5%90%8E%E5%8F%B0/"/>
-    
       <category term="httpClient" scheme="https://majiaji.github.io/tags/httpClient/"/>
+    
+      <category term="后台" scheme="https://majiaji.github.io/tags/%E5%90%8E%E5%8F%B0/"/>
     
   </entry>
   

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://majiaji.github.io/"/>
-  <updated>2017-01-03T16:13:47.000Z</updated>
+  <updated>2017-02-13T16:44:19.000Z</updated>
   <id>https://majiaji.github.io/</id>
   
   <author>
@@ -14,6 +14,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>2017年后小记</title>
+    <link href="https://majiaji.github.io/2017/02/13/2017%E5%B9%B4%E5%90%8E%E5%B0%8F%E8%AE%B0/"/>
+    <id>https://majiaji.github.io/2017/02/13/2017年后小记/</id>
+    <published>2017-02-13T15:48:44.000Z</published>
+    <updated>2017-02-13T16:44:19.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>距离上次写博客时间很久了，鸽了好多期啊。其实是有很多东西可以拿来分享的，只是最近实在太忙了，首先是工作上填一个历史的坑。花了年前几天包括过完年这段时间终于搞定了。重构+数据迁移+bug fix+文档沉淀。希望这个锅搞完后，也能造福同事。</p>
+<p>然后就是办证，像打游戏收集任务材料一样，各种场景跑来跑去的，有的材料还必须在工作日才能爆出。大天朝的各种奇怪的材料需求和规定真是让人费解，什么时候才能刷一下身份证验证所有呢？</p>
+<p>年后剁手买了第一辆小车，加上计划的日本之行，看来今年要吃很多土了。开车方面，因为是新手，说实话，自己上路还是有点胆怯的。而且在上路后才真正发现，原来这个社会上不遵守规则的人有这么多。每天也去B站看下<a href="http://space.bilibili.com/28152409/#!/index" target="_blank" rel="external">交通事故video</a>，天天嘴上念叨着的“让速不让道”，当紧急情况出现时，能临危不乱的老司机会有多少呢？</p>
+<p>学习方面，主要看了一些并发方向的文章，对于原子操作和锁的底层实现有了更深一层的理解。</p>
+<p>闲暇时和同事闲侃了一下现在和未来。现在：有收获也有遗憾，珍惜现在，尽力做好自己；未来：把握机遇，做好选择，持续学习。</p>
+<p>从这周开始要续上断更的技术文章了，共勉！</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;距离上次写博客时间很久了，鸽了好多期啊。其实是有很多东西可以拿来分享的，只是最近实在太忙了，首先是工作上填一个历史的坑。花了年前几天包括过完年这段时间终于搞定了。重构+数据迁移+bug fix+文档沉淀。希望这个锅搞完后，也能造福同事。&lt;/p&gt;
+&lt;p&gt;然后就是办证，像打游戏
+    
+    </summary>
+    
+      <category term="闲谈" scheme="https://majiaji.github.io/categories/%E9%97%B2%E8%B0%88/"/>
+    
+    
+      <category term="闲谈" scheme="https://majiaji.github.io/tags/%E9%97%B2%E8%B0%88/"/>
+    
+  </entry>
   
   <entry>
     <title>2016年总结</title>

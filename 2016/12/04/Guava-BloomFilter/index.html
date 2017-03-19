@@ -1,0 +1,756 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+  <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.css" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+  
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Guava,后台," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="fantasy's blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="BloomFilter简介BloomFilter是一个可以快速判断一个元素是否在一个集合中的组件，它的设计也比较容易理解：构建的时候，一个元素经过几个hash函数hash后，命中一个bit数组的不同的位点，并把位点置为1。在判断的时候，也要执行同样的hash函数，只要有一个没有命中则这个元素一定不存在；否则有可能存在。只会有一种“误判”的情况：元素不在集合中，但被判断为在集合中。
+因为构建时候多个">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Guava BloomFilter">
+<meta property="og:url" content="https://majiaji.github.io/2016/12/04/Guava-BloomFilter/index.html">
+<meta property="og:site_name" content="fantasy's blog">
+<meta property="og:description" content="BloomFilter简介BloomFilter是一个可以快速判断一个元素是否在一个集合中的组件，它的设计也比较容易理解：构建的时候，一个元素经过几个hash函数hash后，命中一个bit数组的不同的位点，并把位点置为1。在判断的时候，也要执行同样的hash函数，只要有一个没有命中则这个元素一定不存在；否则有可能存在。只会有一种“误判”的情况：元素不在集合中，但被判断为在集合中。
+因为构建时候多个">
+<meta property="og:updated_time" content="2017-03-19T08:26:17.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Guava BloomFilter">
+<meta name="twitter:description" content="BloomFilter简介BloomFilter是一个可以快速判断一个元素是否在一个集合中的组件，它的设计也比较容易理解：构建的时候，一个元素经过几个hash函数hash后，命中一个bit数组的不同的位点，并把位点置为1。在判断的时候，也要执行同样的hash函数，只要有一个没有命中则这个元素一定不存在；否则有可能存在。只会有一种“误判”的情况：元素不在集合中，但被判断为在集合中。
+因为构建时候多个">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://majiaji.github.io/2016/12/04/Guava-BloomFilter/"/>
+
+
+
+
+
+  <title> Guava BloomFilter | fantasy's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=59590173";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">fantasy's blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://majiaji.github.io/2016/12/04/Guava-BloomFilter/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="fantasy">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/uploads/avatar.png">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="fantasy's blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="fantasy's blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Guava BloomFilter
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-04T22:00:12+08:00">
+                2016-12-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/后台/" itemprop="url" rel="index">
+                    <span itemprop="name">后台</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <a href="/2016/12/04/Guava-BloomFilter/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/04/Guava-BloomFilter/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="BloomFilter简介"><a href="#BloomFilter简介" class="headerlink" title="BloomFilter简介"></a>BloomFilter简介</h2><p>BloomFilter是一个可以快速判断一个元素是否在一个集合中的组件，它的设计也比较容易理解：构建的时候，一个元素经过几个hash函数hash后，命中一个bit数组的不同的位点，并把位点置为1。在判断的时候，也要执行同样的hash函数，只要有一个没有命中则这个元素一定不存在；否则有可能存在。只会有一种“误判”的情况：元素不在集合中，但被判断为在集合中。</p>
+<p>因为构建时候多个元素经过hash可能命中同样的位点，这样会影响判断时候的准确率。可以想象一下，bit数组越大，hash函数散列效果越好，这样“冲突”的概率越小，判断的正确率越高。但是，扩大bit数组会占用更多内存，hash函数计算复杂度和数量会影响计算速度。所以如何平衡正确率与bit数组长度、hash函数的个数呢？有一个公式：</p>
+<p>假设m是bit数组的bit的数量(长度)，k是hash函数的数量，n是在构造时元素的数量,p为判断时的错误率。则当它们满足下边两个公式时，有近似最优解。</p>
+<blockquote><ol>
+<li><p>m = -n * lnp / (ln2)^2 </p>
+</li>
+<li><p>k = m / n * ln2 </p>
+</li>
+</ol>
+</blockquote>
+<p>具体的推导过程可以看下<a href="https://en.wikipedia.org/wiki/Bloom_filter#Probability_of_false_positives" target="_blank" rel="external">这里。</a><br><a id="more"></a></p>
+<h2 id="Guava中的实现"><a href="#Guava中的实现" class="headerlink" title="Guava中的实现"></a>Guava中的实现</h2><p>Guava中有一个BloomFilter的实现，下面来分析具体的实现方法：</p>
+<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><p>Guava的BloomFilter提供一个静态的创建方法，支持三个参数：</p>
+<ol>
+<li>Funnel&lt;? super T&gt;  转为PrimitiveSink的对象的类型，推荐使用enum。Funnels中支持一些基础类型，也可以自己实现。</li>
+<li>expectedInsertions 预估的构造时元素的数量，即公式中的n。</li>
+<li>fpp 错误率，即公式中的p，范围为0-1.0</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">static</span> &lt;T&gt; <span class="function">BloomFilter&lt;T&gt; <span class="title">create</span><span class="params">(</span></span></div><div class="line">     Funnel&lt;? <span class="keyword">super</span> T&gt; funnel, <span class="keyword">long</span> expectedInsertions, <span class="keyword">double</span> fpp, Strategy strategy) &#123;</div><div class="line">   checkNotNull(funnel);</div><div class="line">   checkArgument(</div><div class="line">       expectedInsertions &gt;= <span class="number">0</span>, <span class="string">"Expected insertions (%s) must be &gt;= 0"</span>, expectedInsertions);</div><div class="line">   checkArgument(fpp &gt; <span class="number">0.0</span>, <span class="string">"False positive probability (%s) must be &gt; 0.0"</span>, fpp);</div><div class="line">   checkArgument(fpp &lt; <span class="number">1.0</span>, <span class="string">"False positive probability (%s) must be &lt; 1.0"</span>, fpp);</div><div class="line">   checkNotNull(strategy);</div><div class="line"></div><div class="line">   <span class="keyword">if</span> (expectedInsertions == <span class="number">0</span>) &#123;</div><div class="line">     expectedInsertions = <span class="number">1</span>;</div><div class="line">   &#125;</div><div class="line">   </div><div class="line">   <span class="comment">//根据公式1. 计算bit数组的bit的数m</span></div><div class="line">   <span class="keyword">long</span> numBits = optimalNumOfBits(expectedInsertions, fpp);</div><div class="line">   <span class="comment">//根据公式2. 计算hash函数(执行hash次数)的数量k</span></div><div class="line">   <span class="keyword">int</span> numHashFunctions = optimalNumOfHashFunctions(expectedInsertions, numBits);</div><div class="line">   <span class="keyword">try</span> &#123;</div><div class="line">     <span class="comment">//生成bit数组，绑定hash策略（默认为MURMUR128_MITZ_64）</span></div><div class="line">     <span class="keyword">return</span> <span class="keyword">new</span> BloomFilter&lt;T&gt;(<span class="keyword">new</span> BitArray(numBits), numHashFunctions, funnel, strategy);</div><div class="line">   &#125; <span class="keyword">catch</span> (IllegalArgumentException e) &#123;</div><div class="line">     <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Could not create BloomFilter of "</span> + numBits + <span class="string">" bits"</span>, e);</div><div class="line">   &#125;</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<h3 id="构建"><a href="#构建" class="headerlink" title="构建"></a>构建</h3><p>调用BloomFilter实例的put方法来添加元素。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> &lt;T&gt; <span class="function"><span class="keyword">boolean</span> <span class="title">put</span><span class="params">(</span></span></div><div class="line">    T object, Funnel&lt;? <span class="keyword">super</span> T&gt; funnel, <span class="keyword">int</span> numHashFunctions, BitArray bits) &#123;</div><div class="line">  <span class="keyword">long</span> bitSize = bits.bitSize();</div><div class="line">  <span class="keyword">byte</span>[] bytes = Hashing.murmur3_128().hashObject(object, funnel).getBytesInternal();</div><div class="line">  <span class="keyword">long</span> hash1 = lowerEight(bytes);</div><div class="line">  <span class="keyword">long</span> hash2 = upperEight(bytes);</div><div class="line"></div><div class="line">  <span class="keyword">boolean</span> bitsChanged = <span class="keyword">false</span>;</div><div class="line">  <span class="keyword">long</span> combinedHash = hash1;</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; numHashFunctions; i++) &#123;</div><div class="line">    <span class="comment">// Make the combined hash positive and indexable</span></div><div class="line">    <span class="comment">//这里先和Long最大值与去掉符号位，模bit数组长度来定位，然后尝试将这位置1。最后加上Hashing.murmur3_128()结果的高8位后循环执行刚才过程。</span></div><div class="line">    bitsChanged |= bits.set((combinedHash &amp; Long.MAX_VALUE) % bitSize);</div><div class="line">    combinedHash += hash2;</div><div class="line">  &#125;</div><div class="line">  <span class="comment">//判断bit数组是否发生了变化，在上边循环中有一位被置为1则说明有变化，添加元素成功，返回true；否则可能之前已经添加过，或者和别的元素hash结果冲突，返回false;</span></div><div class="line">  <span class="keyword">return</span> bitsChanged;</div><div class="line">&#125;</div><div class="line"></div></pre></td></tr></table></figure>
+<p>可见Guava中BloomFilter的实现并不是真正用了多种hash函数，而是通过加法和取模实现再hash。</p>
+<h3 id="判断"><a href="#判断" class="headerlink" title="判断"></a>判断</h3><p>判断过程和添加过程类似，当有一个应该为1的位为0，则这个元素肯定不在集合中，直接返回false。因为有一定误判率p，所以函数名为mightContain：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">public</span> &lt;T&gt; <span class="function"><span class="keyword">boolean</span> <span class="title">mightContain</span><span class="params">(</span></span></div><div class="line">        T object, Funnel&lt;? <span class="keyword">super</span> T&gt; funnel, <span class="keyword">int</span> numHashFunctions, BitArray bits) &#123;</div><div class="line">      <span class="keyword">long</span> bitSize = bits.bitSize();</div><div class="line">      <span class="keyword">byte</span>[] bytes = Hashing.murmur3_128().hashObject(object, funnel).getBytesInternal();</div><div class="line">      <span class="keyword">long</span> hash1 = lowerEight(bytes);</div><div class="line">      <span class="keyword">long</span> hash2 = upperEight(bytes);</div><div class="line"></div><div class="line">      <span class="keyword">long</span> combinedHash = hash1;</div><div class="line">      <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; numHashFunctions; i++) &#123;</div><div class="line">        <span class="comment">// Make the combined hash positive and indexable</span></div><div class="line">        <span class="keyword">if</span> (!bits.get((combinedHash &amp; Long.MAX_VALUE) % bitSize)) &#123;</div><div class="line">          <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line">        combinedHash += hash2;</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">    &#125;</div><div class="line"></div></pre></td></tr></table></figure></p>
+<h2 id="在工程中的应用"><a href="#在工程中的应用" class="headerlink" title="在工程中的应用"></a>在工程中的应用</h2><h3 id="去重"><a href="#去重" class="headerlink" title="去重"></a>去重</h3><p>BloomFilter常用在爬虫系统中的url去重，可以节省大量内存空间。</p>
+<h3 id="性能优化"><a href="#性能优化" class="headerlink" title="性能优化"></a>性能优化</h3><p>BloomFilter可以挡在系统的最前边，进行流量有效性的判断和过滤。如果判断不是此系统的业务则直接丢弃，减轻服务压力。理想情况下，流量经过的组件的顺序是这样的:BloomFilter-&gt;本地缓存-&gt;远端缓存-&gt;db，中间每个环节都可以命中并返回，减轻对后边的压力。</p>
+<h3 id="关键词过滤"><a href="#关键词过滤" class="headerlink" title="关键词过滤"></a>关键词过滤</h3><p>BloomFilter可以支持keyword filter。英文文章有自然的空格字符分词，所以可以直接将敏感词库建立BloomFilter，对文章进行过滤。但是中文就有点尴尬了，只能使用多模式匹配(AC自动机、 Wu-Manber等)的精确算法来进行过滤了。</p>
+<h3 id="分布式系统"><a href="#分布式系统" class="headerlink" title="分布式系统"></a>分布式系统</h3><p>对于分布式系统来说，每台机器上都会有自己的BloomFilter。每个BloomFilter都有自己的版本号，它们需要定时去一个统一的数据源(db或者文件)中load数据，并拿远端的版本号和自己本地版本号进行对比:如果相同则直接跳过，如果不同则需要拿远端数据进行增量构建；同时还需要定时在系统负载低时进行全量构建，保障所有机器上BloomFilter的有效性和正确性。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Guava/" rel="tag"># Guava</a>
+          
+            <a href="/tags/后台/" rel="tag"># 后台</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/03/httpClient参数设置/" rel="next" title="httpClient参数设置">
+                <i class="fa fa-chevron-left"></i> httpClient参数设置
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/11/Guava-Cache/" rel="prev" title="Guava Cache">
+                Guava Cache <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/12/04/Guava-BloomFilter/"
+     data-title="Guava BloomFilter"
+     data-content=""
+     data-url="https://majiaji.github.io/2016/12/04/Guava-BloomFilter/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/12/04/Guava-BloomFilter/"
+           data-title="Guava BloomFilter" data-url="https://majiaji.github.io/2016/12/04/Guava-BloomFilter/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/uploads/avatar.png"
+               alt="fantasy" />
+          <p class="site-author-name" itemprop="name">fantasy</p>
+          <p class="site-description motion-element" itemprop="description">一只正在努力的鶸</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">9</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/majiaji" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="/about" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#BloomFilter简介"><span class="nav-number">1.</span> <span class="nav-text">BloomFilter简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Guava中的实现"><span class="nav-number">2.</span> <span class="nav-text">Guava中的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化"><span class="nav-number">2.1.</span> <span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#构建"><span class="nav-number">2.2.</span> <span class="nav-text">构建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#判断"><span class="nav-number">2.3.</span> <span class="nav-text">判断</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在工程中的应用"><span class="nav-number">3.</span> <span class="nav-text">在工程中的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#去重"><span class="nav-number">3.1.</span> <span class="nav-text">去重</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#性能优化"><span class="nav-number">3.2.</span> <span class="nav-text">性能优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关键词过滤"><span class="nav-number">3.3.</span> <span class="nav-text">关键词过滤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分布式系统"><span class="nav-number">3.4.</span> <span class="nav-text">分布式系统</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">fantasy</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Muse
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/jquery/2.1.3/jquery.min.js"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/jquery_lazyload/1.9.7/jquery.lazyload.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.jsdelivr.net/velocity/1.2.3/velocity.ui.min.js"></script>
+
+  
+  <script type="text/javascript" src="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"majiaji"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="//cdn.jsdelivr.net/ua-parser.js/0.7.10/ua-parser.min.js"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>

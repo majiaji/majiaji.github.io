@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://majiaji.github.io/"/>
-  <updated>2017-03-19T08:26:17.000Z</updated>
+  <updated>2017-03-27T16:18:50.000Z</updated>
   <id>https://majiaji.github.io/</id>
   
   <author>
@@ -14,6 +14,44 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ThreadLocal WeakReference和内存泄漏的思考</title>
+    <link href="https://majiaji.github.io/2017/03/27/threadLocal-WeakReference%E5%92%8C%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E7%9A%84%E6%80%9D%E8%80%83/"/>
+    <id>https://majiaji.github.io/2017/03/27/threadLocal-WeakReference和内存泄漏的思考/</id>
+    <published>2017-03-27T14:46:47.000Z</published>
+    <updated>2017-03-27T16:18:50.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="ThreadLocal的结构"><a href="#ThreadLocal的结构" class="headerlink" title="ThreadLocal的结构"></a>ThreadLocal的结构</h3><p>ThreadLocal是一个有点“特殊”的类，它的实例的生命周期要和当前运行的线程强绑定。当new了一个ThreadLocal实例，并且调用set方法设置值的时候，会创建一个内部类实例ThreadLocalMap，这个Map的entry如下：</p>
+<figure class="highlight plain"><figcaption><span>ThreadLocalMap的entry java</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">static class Entry extends WeakReference&lt;ThreadLocal&lt;?&gt;&gt; &#123;</div><div class="line">           /** The value associated with this ThreadLocal. */</div><div class="line">           Object value;</div><div class="line"></div><div class="line">           Entry(ThreadLocal&lt;?&gt; k, Object v) &#123;</div><div class="line">               super(k);</div><div class="line">               value = v;</div><div class="line">           &#125;</div><div class="line">       &#125;</div></pre></td></tr></table></figure>
+<p>key是ThreadLocal实例本身,value是具体的值。这里entry的key使用了弱引用，即当gc时不管空间是否足够，只要key只剩下当前的弱引用，则一定会被回收掉。<br>外层是以当前线程实例作为key，ThreadLocalMap作为value的一层映射，所以加起来一共有两层映射：thread-&gt;ThreadLocalMap实例-&gt;key:threadLocal本身(弱引用)；value:具体的值。<br><a id="more"></a></p>
+<h3 id="java引用"><a href="#java引用" class="headerlink" title="java引用"></a>java引用</h3><ol>
+<li>强引用（StrongReference）：存在就不会被gc回收，空间不足时报error</li>
+<li>软引用（SoftReference）：当空间不足时才会被gc回收。</li>
+<li>弱引用（WeakReference）：gc过程扫描到就会被回收。</li>
+</ol>
+<h3 id="内存泄漏场景和原因"><a href="#内存泄漏场景和原因" class="headerlink" title="内存泄漏场景和原因"></a>内存泄漏场景和原因</h3><p>举个简单的🌰：<br><img src="/images/threadLocalMemoryLeak.jpg" alt=""><br>在函数memoryLeakExample()中声明了一个ThreadLocal实例t，t是强引用，当函数结束后强引用就没了。ThreadLocalMap实例中的key为弱引用，在下次gc时候会被回收掉。这时候value “hahahahaha”就没有访问路径了，无法被gc回收，产生了内存泄漏。只要当前线程不结束，并且不调用set/get/remove方法（这些方法会对key为null的entry进行释放），这片内存会被一直占用。</p>
+<h3 id="为什么用weakReference"><a href="#为什么用weakReference" class="headerlink" title="为什么用weakReference?"></a>为什么用weakReference?</h3><ol>
+<li>为什么ThreadLocalMap的key用弱引用，为什么不用强引用呢?<br>这里的弱引用可以首先由gc来判断ThreadLocal实例是否真的可以回收，由gc回收的结果，间接告诉我们，key为null了，这时候value也可以被清理了，并且最终通过高频操作get/set/remove封装好的方法进行清理。如果用强引用那么我们一直不知道这个entry是否可以被回收，除非强制每个coder在逻辑执行完的最后进行一次全局清理。</li>
+<li>为什么value不用弱引用呢？<br>value不像key那样，还有一个外部的强引用，可能在业务执行过程中发生了gc，value被清理了，业务后边取值会出错的。</li>
+</ol>
+<h3 id="工程中的实践"><a href="#工程中的实践" class="headerlink" title="工程中的实践"></a>工程中的实践</h3><p>在一个上下文类中声明一个静态的ThreadLocal对象，延长其生命周期，方便其他方法访问，以这个对象为载体存储请求的上下文信息，在各个处理函数中进行传递。最后一步记得主动调用remove方法，避免内存泄漏。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;ThreadLocal的结构&quot;&gt;&lt;a href=&quot;#ThreadLocal的结构&quot; class=&quot;headerlink&quot; title=&quot;ThreadLocal的结构&quot;&gt;&lt;/a&gt;ThreadLocal的结构&lt;/h3&gt;&lt;p&gt;ThreadLocal是一个有点“特殊”的类，它的实例的生命周期要和当前运行的线程强绑定。当new了一个ThreadLocal实例，并且调用set方法设置值的时候，会创建一个内部类实例ThreadLocalMap，这个Map的entry如下：&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;figcaption&gt;&lt;span&gt;ThreadLocalMap的entry java&lt;/span&gt;&lt;/figcaption&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;4&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;5&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;6&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;7&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;8&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;9&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;static class Entry extends WeakReference&amp;lt;ThreadLocal&amp;lt;?&amp;gt;&amp;gt; &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;           /** The value associated with this ThreadLocal. */&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;           Object value;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;           Entry(ThreadLocal&amp;lt;?&amp;gt; k, Object v) &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;               super(k);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;               value = v;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;           &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;       &amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;key是ThreadLocal实例本身,value是具体的值。这里entry的key使用了弱引用，即当gc时不管空间是否足够，只要key只剩下当前的弱引用，则一定会被回收掉。&lt;br&gt;外层是以当前线程实例作为key，ThreadLocalMap作为value的一层映射，所以加起来一共有两层映射：thread-&amp;gt;ThreadLocalMap实例-&amp;gt;key:threadLocal本身(弱引用)；value:具体的值。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="后台" scheme="https://majiaji.github.io/categories/%E5%90%8E%E5%8F%B0/"/>
+    
+    
+      <category term="后台" scheme="https://majiaji.github.io/tags/%E5%90%8E%E5%8F%B0/"/>
+    
+  </entry>
   
   <entry>
     <title>2017年后小记</title>

@@ -46,7 +46,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="闲谈," />
+  <meta name="keywords" content="后台," />
 
 
 
@@ -64,19 +64,21 @@
 
 
 
-<meta name="description" content="距离上次写博客时间很久了，鸽了好多期啊。其实是有很多东西可以拿来分享的，只是最近实在太忙了，首先是工作上填一个历史的坑。花了年前几天包括过完年这段时间终于搞定了。重构+数据迁移+bug fix+文档沉淀。希望这个锅搞完后，也能造福同事。
-然后就是办证，像打游戏收集任务材料一样，各种场景跑来跑去的，有的材料还必须在工作日才能爆出。大天朝的各种奇怪的材料需求和规定真是让人费解，什么时候才能刷一下身份证">
+<meta name="description" content="ThreadLocal的结构ThreadLocal是一个有点“特殊”的类，它的实例的生命周期要和当前运行的线程强绑定。当new了一个ThreadLocal实例，并且调用set方法设置值的时候，会创建一个内部类实例ThreadLocalMap，这个Map的entry如下：
+ThreadLocalMap的entry java123456789static class Entry extends Wea">
 <meta property="og:type" content="article">
-<meta property="og:title" content="2017年后小记">
-<meta property="og:url" content="https://majiaji.github.io/2017/02/13/2017年后小记/index.html">
+<meta property="og:title" content="ThreadLocal WeakReference和内存泄漏的思考">
+<meta property="og:url" content="https://majiaji.github.io/2017/03/27/threadLocal-WeakReference和内存泄漏的思考/index.html">
 <meta property="og:site_name" content="fantasy's blog">
-<meta property="og:description" content="距离上次写博客时间很久了，鸽了好多期啊。其实是有很多东西可以拿来分享的，只是最近实在太忙了，首先是工作上填一个历史的坑。花了年前几天包括过完年这段时间终于搞定了。重构+数据迁移+bug fix+文档沉淀。希望这个锅搞完后，也能造福同事。
-然后就是办证，像打游戏收集任务材料一样，各种场景跑来跑去的，有的材料还必须在工作日才能爆出。大天朝的各种奇怪的材料需求和规定真是让人费解，什么时候才能刷一下身份证">
-<meta property="og:updated_time" content="2017-03-19T08:26:17.000Z">
+<meta property="og:description" content="ThreadLocal的结构ThreadLocal是一个有点“特殊”的类，它的实例的生命周期要和当前运行的线程强绑定。当new了一个ThreadLocal实例，并且调用set方法设置值的时候，会创建一个内部类实例ThreadLocalMap，这个Map的entry如下：
+ThreadLocalMap的entry java123456789static class Entry extends Wea">
+<meta property="og:image" content="https://majiaji.github.io/images/threadLocalMemoryLeak.jpg">
+<meta property="og:updated_time" content="2017-03-27T16:18:50.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="2017年后小记">
-<meta name="twitter:description" content="距离上次写博客时间很久了，鸽了好多期啊。其实是有很多东西可以拿来分享的，只是最近实在太忙了，首先是工作上填一个历史的坑。花了年前几天包括过完年这段时间终于搞定了。重构+数据迁移+bug fix+文档沉淀。希望这个锅搞完后，也能造福同事。
-然后就是办证，像打游戏收集任务材料一样，各种场景跑来跑去的，有的材料还必须在工作日才能爆出。大天朝的各种奇怪的材料需求和规定真是让人费解，什么时候才能刷一下身份证">
+<meta name="twitter:title" content="ThreadLocal WeakReference和内存泄漏的思考">
+<meta name="twitter:description" content="ThreadLocal的结构ThreadLocal是一个有点“特殊”的类，它的实例的生命周期要和当前运行的线程强绑定。当new了一个ThreadLocal实例，并且调用set方法设置值的时候，会创建一个内部类实例ThreadLocalMap，这个Map的entry如下：
+ThreadLocalMap的entry java123456789static class Entry extends Wea">
+<meta name="twitter:image" content="https://majiaji.github.io/images/threadLocalMemoryLeak.jpg">
 
 
 
@@ -104,13 +106,13 @@
 
 
 
-  <link rel="canonical" href="https://majiaji.github.io/2017/02/13/2017年后小记/"/>
+  <link rel="canonical" href="https://majiaji.github.io/2017/03/27/threadLocal-WeakReference和内存泄漏的思考/"/>
 
 
 
 
 
-  <title> 2017年后小记 | fantasy's blog </title>
+  <title> ThreadLocal WeakReference和内存泄漏的思考 | fantasy's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -250,7 +252,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="https://majiaji.github.io/2017/02/13/2017年后小记/">
+  <link itemprop="mainEntityOfPage" href="https://majiaji.github.io/2017/03/27/threadLocal-WeakReference和内存泄漏的思考/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="fantasy">
@@ -274,7 +276,7 @@
             
             
               
-                2017年后小记
+                ThreadLocal WeakReference和内存泄漏的思考
               
             
           </h1>
@@ -287,8 +289,8 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-13T23:48:44+08:00">
-                2017-02-13
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-03-27T22:46:47+08:00">
+                2017-03-27
               </time>
             
 
@@ -306,8 +308,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/闲谈/" itemprop="url" rel="index">
-                    <span itemprop="name">闲谈</span>
+                  <a href="/categories/后台/" itemprop="url" rel="index">
+                    <span itemprop="name">后台</span>
                   </a>
                 </span>
 
@@ -321,8 +323,8 @@
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2017/02/13/2017年后小记/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/02/13/2017年后小记/" itemprop="commentCount"></span>
+                <a href="/2017/03/27/threadLocal-WeakReference和内存泄漏的思考/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/27/threadLocal-WeakReference和内存泄漏的思考/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -348,12 +350,20 @@
       
 
       
-        <p>距离上次写博客时间很久了，鸽了好多期啊。其实是有很多东西可以拿来分享的，只是最近实在太忙了，首先是工作上填一个历史的坑。花了年前几天包括过完年这段时间终于搞定了。重构+数据迁移+bug fix+文档沉淀。希望这个锅搞完后，也能造福同事。</p>
-<p>然后就是办证，像打游戏收集任务材料一样，各种场景跑来跑去的，有的材料还必须在工作日才能爆出。大天朝的各种奇怪的材料需求和规定真是让人费解，什么时候才能刷一下身份证验证所有呢？</p>
-<p>年后剁手买了第一辆小车，加上计划的日本之行，看来今年要吃很多土了。开车方面，因为是新手，说实话，自己上路还是有点胆怯的。而且在上路后才真正发现，原来这个社会上不遵守规则的人有这么多。每天也去B站看下<a href="http://space.bilibili.com/28152409/#!/index" target="_blank" rel="external">交通事故video</a>，天天嘴上念叨着的“让速不让道”，当紧急情况出现时，能临危不乱的老司机会有多少呢？</p>
-<p>学习方面，主要看了一些并发方向的文章，对于原子操作和锁的底层实现有了更深一层的理解。</p>
-<p>闲暇时和同事闲侃了一下现在和未来。现在：有收获也有遗憾，珍惜现在，尽力做好自己；未来：把握机遇，做好选择，持续学习。</p>
-<p>从这周开始要续上断更的技术文章了，共勉！</p>
+        <h3 id="ThreadLocal的结构"><a href="#ThreadLocal的结构" class="headerlink" title="ThreadLocal的结构"></a>ThreadLocal的结构</h3><p>ThreadLocal是一个有点“特殊”的类，它的实例的生命周期要和当前运行的线程强绑定。当new了一个ThreadLocal实例，并且调用set方法设置值的时候，会创建一个内部类实例ThreadLocalMap，这个Map的entry如下：</p>
+<figure class="highlight plain"><figcaption><span>ThreadLocalMap的entry java</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">static class Entry extends WeakReference&lt;ThreadLocal&lt;?&gt;&gt; &#123;</div><div class="line">           /** The value associated with this ThreadLocal. */</div><div class="line">           Object value;</div><div class="line"></div><div class="line">           Entry(ThreadLocal&lt;?&gt; k, Object v) &#123;</div><div class="line">               super(k);</div><div class="line">               value = v;</div><div class="line">           &#125;</div><div class="line">       &#125;</div></pre></td></tr></table></figure>
+<p>key是ThreadLocal实例本身,value是具体的值。这里entry的key使用了弱引用，即当gc时不管空间是否足够，只要key只剩下当前的弱引用，则一定会被回收掉。<br>外层是以当前线程实例作为key，ThreadLocalMap作为value的一层映射，所以加起来一共有两层映射：thread-&gt;ThreadLocalMap实例-&gt;key:threadLocal本身(弱引用)；value:具体的值。<br><a id="more"></a></p>
+<h3 id="java引用"><a href="#java引用" class="headerlink" title="java引用"></a>java引用</h3><ol>
+<li>强引用（StrongReference）：存在就不会被gc回收，空间不足时报error</li>
+<li>软引用（SoftReference）：当空间不足时才会被gc回收。</li>
+<li>弱引用（WeakReference）：gc过程扫描到就会被回收。</li>
+</ol>
+<h3 id="内存泄漏场景和原因"><a href="#内存泄漏场景和原因" class="headerlink" title="内存泄漏场景和原因"></a>内存泄漏场景和原因</h3><p>举个简单的🌰：<br><img src="/images/threadLocalMemoryLeak.jpg" alt=""><br>在函数memoryLeakExample()中声明了一个ThreadLocal实例t，t是强引用，当函数结束后强引用就没了。ThreadLocalMap实例中的key为弱引用，在下次gc时候会被回收掉。这时候value “hahahahaha”就没有访问路径了，无法被gc回收，产生了内存泄漏。只要当前线程不结束，并且不调用set/get/remove方法（这些方法会对key为null的entry进行释放），这片内存会被一直占用。</p>
+<h3 id="为什么用weakReference"><a href="#为什么用weakReference" class="headerlink" title="为什么用weakReference?"></a>为什么用weakReference?</h3><ol>
+<li>为什么ThreadLocalMap的key用弱引用，为什么不用强引用呢?<br>这里的弱引用可以首先由gc来判断ThreadLocal实例是否真的可以回收，由gc回收的结果，间接告诉我们，key为null了，这时候value也可以被清理了，并且最终通过高频操作get/set/remove封装好的方法进行清理。如果用强引用那么我们一直不知道这个entry是否可以被回收，除非强制每个coder在逻辑执行完的最后进行一次全局清理。</li>
+<li>为什么value不用弱引用呢？<br>value不像key那样，还有一个外部的强引用，可能在业务执行过程中发生了gc，value被清理了，业务后边取值会出错的。</li>
+</ol>
+<h3 id="工程中的实践"><a href="#工程中的实践" class="headerlink" title="工程中的实践"></a>工程中的实践</h3><p>在一个上下文类中声明一个静态的ThreadLocal对象，延长其生命周期，方便其他方法访问，以这个对象为载体存储请求的上下文信息，在各个处理函数中进行传递。最后一步记得主动调用remove方法，避免内存泄漏。</p>
 
       
     </div>
@@ -377,7 +387,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/闲谈/" rel="tag"># 闲谈</a>
+            <a href="/tags/后台/" rel="tag"># 后台</a>
           
         </div>
       
@@ -386,8 +396,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/12/31/2016年总结/" rel="next" title="2016年总结">
-                <i class="fa fa-chevron-left"></i> 2016年总结
+              <a href="/2017/02/13/2017年后小记/" rel="next" title="2017年后小记">
+                <i class="fa fa-chevron-left"></i> 2017年后小记
               </a>
             
           </div>
@@ -395,10 +405,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/03/27/threadLocal-WeakReference和内存泄漏的思考/" rel="prev" title="ThreadLocal WeakReference和内存泄漏的思考">
-                ThreadLocal WeakReference和内存泄漏的思考 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -413,10 +419,10 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2017/02/13/2017年后小记/"
-     data-title="2017年后小记"
+        <div class="ds-share flat" data-thread-key="2017/03/27/threadLocal-WeakReference和内存泄漏的思考/"
+     data-title="ThreadLocal WeakReference和内存泄漏的思考"
      data-content=""
-     data-url="https://majiaji.github.io/2017/02/13/2017年后小记/">
+     data-url="https://majiaji.github.io/2017/03/27/threadLocal-WeakReference和内存泄漏的思考/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -443,8 +449,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/02/13/2017年后小记/"
-           data-title="2017年后小记" data-url="https://majiaji.github.io/2017/02/13/2017年后小记/">
+      <div class="ds-thread" data-thread-key="2017/03/27/threadLocal-WeakReference和内存泄漏的思考/"
+           data-title="ThreadLocal WeakReference和内存泄漏的思考" data-url="https://majiaji.github.io/2017/03/27/threadLocal-WeakReference和内存泄漏的思考/">
       </div>
     
   </div>
@@ -468,8 +474,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/uploads/avatar.png"
@@ -549,6 +564,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#ThreadLocal的结构"><span class="nav-number">1.</span> <span class="nav-text">ThreadLocal的结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#java引用"><span class="nav-number">2.</span> <span class="nav-text">java引用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#内存泄漏场景和原因"><span class="nav-number">3.</span> <span class="nav-text">内存泄漏场景和原因</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么用weakReference"><span class="nav-number">4.</span> <span class="nav-text">为什么用weakReference?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工程中的实践"><span class="nav-number">5.</span> <span class="nav-text">工程中的实践</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
     </div>

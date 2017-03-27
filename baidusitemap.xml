@@ -24,19 +24,19 @@
 
     
   <url>
-    <loc>https://majiaji.github.io/2016/11/21/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/</loc>
+    <loc>https://majiaji.github.io/2016/12/25/%E7%90%86%E8%A7%A3%E5%9B%9E%E8%B0%83/</loc>
     <lastmod>2017-03-19T08:26:17.000Z</lastmod>
     <data>
         <display>
-        <title>啊，第一篇博客</title>
-        <pubTime>2016-11-21T07:06:25.000Z</pubTime>
+        <title>理解回调机制</title>
+        <pubTime>2016-12-25T11:27:57.000Z</pubTime>
         
-        <tag>闲谈</tag>
+        <tag>后台</tag>
          
          
            
              
-              <breadCrumb title="闲谈" url="https://majiaji.github.io/categories/%E9%97%B2%E8%B0%88/"/>
+              <breadCrumb title="后台" url="https://majiaji.github.io/categories/%E5%90%8E%E5%8F%B0/"/>
           
         </display>
     </data>
@@ -51,9 +51,31 @@
         <title>Guava BloomFilter</title>
         <pubTime>2016-12-04T14:00:12.000Z</pubTime>
         
+        <tag>Guava</tag>
+         
         <tag>后台</tag>
          
+         
+           
+             
+              <breadCrumb title="后台" url="https://majiaji.github.io/categories/%E5%90%8E%E5%8F%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://majiaji.github.io/2016/12/11/Guava-Cache/</loc>
+    <lastmod>2017-03-19T08:26:17.000Z</lastmod>
+    <data>
+        <display>
+        <title>Guava Cache</title>
+        <pubTime>2016-12-11T05:31:42.000Z</pubTime>
+        
         <tag>Guava</tag>
+         
+        <tag>后台</tag>
          
          
            
@@ -86,50 +108,6 @@
 
     
   <url>
-    <loc>https://majiaji.github.io/2016/11/23/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E7%9A%84%E6%B5%AE%E5%85%89%E6%8E%A0%E5%BD%B1/</loc>
-    <lastmod>2017-03-19T08:26:17.000Z</lastmod>
-    <data>
-        <display>
-        <title>前端开发的浮光掠影</title>
-        <pubTime>2016-11-22T16:04:18.000Z</pubTime>
-        
-        <tag>前端</tag>
-         
-        <tag>javascript</tag>
-         
-         
-           
-             
-              <breadCrumb title="前端" url="https://majiaji.github.io/categories/%E5%89%8D%E7%AB%AF/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://majiaji.github.io/2016/12/11/Guava-Cache/</loc>
-    <lastmod>2017-03-19T08:26:17.000Z</lastmod>
-    <data>
-        <display>
-        <title>Guava Cache</title>
-        <pubTime>2016-12-11T05:31:42.000Z</pubTime>
-        
-        <tag>后台</tag>
-         
-        <tag>Guava</tag>
-         
-         
-           
-             
-              <breadCrumb title="后台" url="https://majiaji.github.io/categories/%E5%90%8E%E5%8F%B0/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>https://majiaji.github.io/2016/12/03/httpClient%E5%8F%82%E6%95%B0%E8%AE%BE%E7%BD%AE/</loc>
     <lastmod>2017-03-19T08:26:17.000Z</lastmod>
     <data>
@@ -145,6 +123,28 @@
            
              
               <breadCrumb title="后台" url="https://majiaji.github.io/categories/%E5%90%8E%E5%8F%B0/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://majiaji.github.io/2016/11/23/%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E7%9A%84%E6%B5%AE%E5%85%89%E6%8E%A0%E5%BD%B1/</loc>
+    <lastmod>2017-03-19T08:26:17.000Z</lastmod>
+    <data>
+        <display>
+        <title>前端开发的浮光掠影</title>
+        <pubTime>2016-11-22T16:04:18.000Z</pubTime>
+        
+        <tag>前端</tag>
+         
+        <tag>javascript</tag>
+         
+         
+           
+             
+              <breadCrumb title="前端" url="https://majiaji.github.io/categories/%E5%89%8D%E7%AB%AF/"/>
           
         </display>
     </data>
@@ -172,19 +172,19 @@
 
     
   <url>
-    <loc>https://majiaji.github.io/2016/12/25/%E7%90%86%E8%A7%A3%E5%9B%9E%E8%B0%83/</loc>
+    <loc>https://majiaji.github.io/2016/11/21/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/</loc>
     <lastmod>2017-03-19T08:26:17.000Z</lastmod>
     <data>
         <display>
-        <title>理解回调机制</title>
-        <pubTime>2016-12-25T11:27:57.000Z</pubTime>
+        <title>啊，第一篇博客</title>
+        <pubTime>2016-11-21T07:06:25.000Z</pubTime>
         
-        <tag>后台</tag>
+        <tag>闲谈</tag>
          
          
            
              
-              <breadCrumb title="后台" url="https://majiaji.github.io/categories/%E5%90%8E%E5%8F%B0/"/>
+              <breadCrumb title="闲谈" url="https://majiaji.github.io/categories/%E9%97%B2%E8%B0%88/"/>
           
         </display>
     </data>

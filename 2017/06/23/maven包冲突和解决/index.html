@@ -46,7 +46,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="闲谈," />
+  <meta name="keywords" content="后台," />
 
 
 
@@ -64,19 +64,18 @@
 
 
 
-<meta name="description" content="2016年的最后一天，坐下来聊一聊和2016有关的事情和感想。
-话说算上实习，今年已经工作两年了。一起来杭州的大学室友蛋蛋跑去了北京，我们同寝的时间定格在了五年。每次回来都会感觉不太习惯，少了一个愿意听我bb的人、愿意和我bb的人。蛋蛋是一个很善良的人，我一直担心他社会经验不足，不厌其烦的跟他聊我在北京时的一点点经验，后来发现我真是多虑了。蛋蛋到了北京后执行力爆表，迅速的找到了蛋妹，过上了幸福的生">
+<meta name="description" content="玄学问题maven的作者认为项目中依赖哪个包应该完全由开发人员来负责(确实应该如此)，所以maven只提供了几个在加载包时的优先级机制和规则。在工作中，开发人员对maven了解程度不同、依赖的包又间接依赖混乱等问题，导致应用在启动时经常会出现”class not found”或者”no such method”的异常，最终应用无法启动。如果不解决包冲突，那就经常会出现测试环境ok，但是发到线上环境">
 <meta property="og:type" content="article">
-<meta property="og:title" content="2016年总结">
-<meta property="og:url" content="https://majiaji.github.io/2016/12/31/2016年总结/index.html">
+<meta property="og:title" content="maven包冲突和解决">
+<meta property="og:url" content="https://majiaji.github.io/2017/06/23/maven包冲突和解决/index.html">
 <meta property="og:site_name" content="fantasy's blog">
-<meta property="og:description" content="2016年的最后一天，坐下来聊一聊和2016有关的事情和感想。
-话说算上实习，今年已经工作两年了。一起来杭州的大学室友蛋蛋跑去了北京，我们同寝的时间定格在了五年。每次回来都会感觉不太习惯，少了一个愿意听我bb的人、愿意和我bb的人。蛋蛋是一个很善良的人，我一直担心他社会经验不足，不厌其烦的跟他聊我在北京时的一点点经验，后来发现我真是多虑了。蛋蛋到了北京后执行力爆表，迅速的找到了蛋妹，过上了幸福的生">
-<meta property="og:updated_time" content="2017-03-19T08:26:17.000Z">
+<meta property="og:description" content="玄学问题maven的作者认为项目中依赖哪个包应该完全由开发人员来负责(确实应该如此)，所以maven只提供了几个在加载包时的优先级机制和规则。在工作中，开发人员对maven了解程度不同、依赖的包又间接依赖混乱等问题，导致应用在启动时经常会出现”class not found”或者”no such method”的异常，最终应用无法启动。如果不解决包冲突，那就经常会出现测试环境ok，但是发到线上环境">
+<meta property="og:image" content="https://majiaji.github.io/images/resolvePomConflict.jpg">
+<meta property="og:updated_time" content="2017-06-23T06:43:16.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="2016年总结">
-<meta name="twitter:description" content="2016年的最后一天，坐下来聊一聊和2016有关的事情和感想。
-话说算上实习，今年已经工作两年了。一起来杭州的大学室友蛋蛋跑去了北京，我们同寝的时间定格在了五年。每次回来都会感觉不太习惯，少了一个愿意听我bb的人、愿意和我bb的人。蛋蛋是一个很善良的人，我一直担心他社会经验不足，不厌其烦的跟他聊我在北京时的一点点经验，后来发现我真是多虑了。蛋蛋到了北京后执行力爆表，迅速的找到了蛋妹，过上了幸福的生">
+<meta name="twitter:title" content="maven包冲突和解决">
+<meta name="twitter:description" content="玄学问题maven的作者认为项目中依赖哪个包应该完全由开发人员来负责(确实应该如此)，所以maven只提供了几个在加载包时的优先级机制和规则。在工作中，开发人员对maven了解程度不同、依赖的包又间接依赖混乱等问题，导致应用在启动时经常会出现”class not found”或者”no such method”的异常，最终应用无法启动。如果不解决包冲突，那就经常会出现测试环境ok，但是发到线上环境">
+<meta name="twitter:image" content="https://majiaji.github.io/images/resolvePomConflict.jpg">
 
 
 
@@ -104,13 +103,13 @@
 
 
 
-  <link rel="canonical" href="https://majiaji.github.io/2016/12/31/2016年总结/"/>
+  <link rel="canonical" href="https://majiaji.github.io/2017/06/23/maven包冲突和解决/"/>
 
 
 
 
 
-  <title> 2016年总结 | fantasy's blog </title>
+  <title> maven包冲突和解决 | fantasy's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -250,7 +249,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="https://majiaji.github.io/2016/12/31/2016年总结/">
+  <link itemprop="mainEntityOfPage" href="https://majiaji.github.io/2017/06/23/maven包冲突和解决/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="fantasy">
@@ -274,7 +273,7 @@
             
             
               
-                2016年总结
+                maven包冲突和解决
               
             
           </h1>
@@ -287,8 +286,8 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-31T00:28:14+08:00">
-                2016-12-31
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-06-23T02:25:00+08:00">
+                2017-06-23
               </time>
             
 
@@ -306,8 +305,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/闲谈/" itemprop="url" rel="index">
-                    <span itemprop="name">闲谈</span>
+                  <a href="/categories/后台/" itemprop="url" rel="index">
+                    <span itemprop="name">后台</span>
                   </a>
                 </span>
 
@@ -341,36 +340,26 @@
       
 
       
-        <p>2016年的最后一天，坐下来聊一聊和2016有关的事情和感想。</p>
-<p>话说算上实习，今年已经工作两年了。一起来杭州的大学室友蛋蛋跑去了北京，我们同寝的时间定格在了五年。每次回来都会感觉不太习惯，少了一个愿意听我bb的人、愿意和我bb的人。蛋蛋是一个很善良的人，我一直担心他社会经验不足，不厌其烦的跟他聊我在北京时的一点点经验，后来发现我真是多虑了。蛋蛋到了北京后执行力爆表，迅速的找到了蛋妹，过上了幸福的生活。临走那天送给蛋蛋的祝福很快成真，也是一件很开心的事情。</p>
-<p>女盆友和家人在不同的两个远方，几乎所有的假期和年假都是和他们一起度过的。经常深圳郑州两边跑，虽然路途辛苦(主要锅在hz交通)，但是能见到他们还是很开心的。新的一年希望能有时间带他们出去走走，更希望自己有能力早点在异乡有我们的家🏠。</p>
+        <h3 id="玄学问题"><a href="#玄学问题" class="headerlink" title="玄学问题"></a>玄学问题</h3><p>maven的作者认为项目中依赖哪个包应该完全由开发人员来负责(确实应该如此)，所以maven只提供了几个在加载包时的优先级机制和规则。在工作中，开发人员对maven了解程度不同、依赖的包又间接依赖混乱等问题，导致应用在启动时经常会出现”class not found”或者”no such method”的异常，最终应用无法启动。如果不解决包冲突，那就经常会出现测试环境ok，但是发到线上环境就异常的“玄学”问题。</p>
 <a id="more"></a>
-<h3 id="工作"><a href="#工作" class="headerlink" title="工作"></a>工作</h3><p>工作方面，2016年自己成长了许多，最大的变化是自己面对各种问题时多了一份从容，问题解决后也会有思考和总结。只是开始写博客的时间太晚了，踩过的坑和学到的东西没有尽数记录下来。这是今年的一点小遗憾吧。</p>
-<p>今年前半段时间有些浮躁，会为一些小成就而自满，放松自己。还好最近一段时间遭受了一些打击，终于能沉下心来看一些之前看不下去的书了。现在我已经非常确定了自己的发展方向，会坚持的走下去。希望自己未来能在这个领域能有所贡献。</p>
-<p>感谢周围同事耐心的指导，从你们身上我学到了很多，我有了自己的榜样和看齐的对象。</p>
-<p>工作是为了生活，但兴趣也是很重要的。在工作之余的时间我做了一些小组件，放在了git上。希望新的一年能多做一些更有趣的东西。</p>
-<h3 id="生活"><a href="#生活" class="headerlink" title="生活"></a>生活</h3><h4 id="旅行"><a href="#旅行" class="headerlink" title="旅行"></a>旅行</h4><p>今年去了好多地方：杭州、绍兴、舟山、千岛湖、深圳 x 3、香港、上海、成都、广州、横店、北京、郑州 x 2、乌镇。和我同行的人，比我到的地方更重要。</p>
-<p>2017年，也要考虑带妹子回家，还有去妹子家的事情了。还计划和妹子去一下日本，正在准备中。</p>
-<h4 id="电影"><a href="#电影" class="headerlink" title="电影"></a>电影</h4><p>今年看过的觉得很赞的电影:<br>我的少女时代、火星救援、师父、寻龙诀、唐人街探案、美国队长3、死侍、科洛弗道10号、夏洛特烦恼、垫底辣妹、疯狂动物城、美人鱼、火影忍者剧场版：博人转、老炮儿、小姐、魔兽、火锅英雄、追凶者也、七月与安生、釜山行、驴得水、你的名字。</p>
-<p>前段时间忽然明白为什么说“艺术是比科学更高一层的存在”了，假如不学计算机的话，我应该想去学编辑或者导演吧、或者学作曲也可以的😌……(醒一醒)</p>
-<p>今年还看过两部非常棒的剧：</p>
+<h3 id="maven加载优先级"><a href="#maven加载优先级" class="headerlink" title="maven加载优先级"></a>maven加载优先级</h3><p>所以maven的优先级和规则究竟是怎样的呢？在研究了<a href="http://people.apache.org/~jvanzyl/maven-3.1.1/guides/introduction/introduction-to-dependency-mechanism.html" target="_blank" rel="external">官方文档</a>后做了一些总结，一共有如下几个规则：</p>
 <ol>
-<li>李狗嗨(legal high)：胜利即正义！</li>
-<li>西部世界(west world):Bring yourself back online.</li>
+<li>“nearest definition”最近优先原则：如果两个包A和B在同一层，它们分别间接依赖了包C，那么会加载离AB这层最近的版本的C。如果C的距离也是相同的，那么就加载遇到的第一个。maven的这个机制试图解决传递依赖过程中，具体用哪个包的问题。</li>
+<li>“Dependency management”提供一种机制可以让开发者显示指定要用哪个版本，实现统一管理。一般在多模块的父子pom模式中，在父pom中使用<dependencymanagement>指定好所有依赖的版本，子pom中写自己要用的包，但不带版本号。</dependencymanagement></li>
 </ol>
-<h4 id="身体"><a href="#身体" class="headerlink" title="身体"></a>身体</h4><p>今年身体比去年更差了一些（难道高中时期真的是巅峰吗），每天对着电脑，视力下降了一些。上个月有段时间每到晚上眼睛都疼睁不开，坐了很久背也会有点疼。还好体检结果没有什么大问题，比上学时候胖了一些。</p>
-<p>措施：坚持每天骑车上下班🚴。每周末坚持运动，篮球或者跑步，有机会去游泳。每天争取12点前睡觉。</p>
-<h3 id="2017的期待"><a href="#2017的期待" class="headerlink" title="2017的期待"></a>2017的期待</h3><p>新的一年，有很多事情要做：</p>
+<p>优先级问题：</p>
+<p>子模块在加载时，遇到一个包要确定版本号：如果子pom指定了版本号，则使用此版本的包（不推荐这样做）；否则尝试使用父pom中dependencyManagement中标明的版本号；dependencyManagement中也没有标明，则依赖“nearest definition”规则，找离根节点最近的包，或者同距离的第一个包。</p>
+<h3 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a>最佳实践</h3><ol>
+<li>创建项目：在父pom中dependencyManagement列清所有要依赖的包和版本号，子pom中写自己要用的包的groupId和artifactId，版本由父pom统一管理。</li>
+<li>给别人打包：maven依赖可以指定在不同阶段使用不通的范围，具体可以参考官方文档中Dependency Scope的介绍。给别人打包时尽量少依赖第三方的包、或者最好把第三包的Scope设置为provided,减少对于使用方的影响。</li>
+</ol>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>了解了maven加载优先级，但是还是躲不掉包冲突的问题，因为我们不可能去遍历依赖包的所有传递依赖。解决包冲突问题有几个步骤：</p>
 <ol>
-<li>努力学习，点满后端技能树，并尝试进阶</li>
-<li>每周至少一篇博客，技术总结 or 生活点滴</li>
-<li>多回家看看，多陪陪女盆友</li>
-<li>想学一门弦乐器，乌克丽丽或者吉他</li>
-<li>学会做饭，能在周末自给自足</li>
-<li>买个小车</li>
-<li>早睡</li>
+<li>查看日志，定位到包的代码。确定是哪些包冲突了。</li>
+<li>使用maven:tree命令或者idea辅助确定：<br><img src="/images/resolvePomConflict.jpg" alt=""></li>
+<li>在父pom中使用exclude把不用的包排掉。</li>
 </ol>
-<p>愿2017一切更好，新年快乐~~~</p>
+<p>选择依赖时尽量使用有名的或者大厂的包，可能会避免很多问题。</p>
 
       
     </div>
@@ -394,7 +383,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/闲谈/" rel="tag"># 闲谈</a>
+            <a href="/tags/后台/" rel="tag"># 后台</a>
           
         </div>
       
@@ -403,8 +392,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/12/25/理解回调/" rel="next" title="理解回调机制">
-                <i class="fa fa-chevron-left"></i> 理解回调机制
+              <a href="/2017/03/27/threadLocal-WeakReference和内存泄漏的思考/" rel="next" title="ThreadLocal WeakReference和内存泄漏的思考">
+                <i class="fa fa-chevron-left"></i> ThreadLocal WeakReference和内存泄漏的思考
               </a>
             
           </div>
@@ -412,10 +401,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/02/13/2017年后小记/" rel="prev" title="2017年后小记">
-                2017年后小记 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -562,7 +547,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#工作"><span class="nav-number">1.</span> <span class="nav-text">工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#生活"><span class="nav-number">2.</span> <span class="nav-text">生活</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#旅行"><span class="nav-number">2.1.</span> <span class="nav-text">旅行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#电影"><span class="nav-number">2.2.</span> <span class="nav-text">电影</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#身体"><span class="nav-number">2.3.</span> <span class="nav-text">身体</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2017的期待"><span class="nav-number">3.</span> <span class="nav-text">2017的期待</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#玄学问题"><span class="nav-number">1.</span> <span class="nav-text">玄学问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#maven加载优先级"><span class="nav-number">2.</span> <span class="nav-text">maven加载优先级</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最佳实践"><span class="nav-number">3.</span> <span class="nav-text">最佳实践</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方法"><span class="nav-number">4.</span> <span class="nav-text">解决方法</span></a></li></ol></div>
             
 
           </div>

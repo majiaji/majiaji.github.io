@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://majiaji.github.io/"/>
-  <updated>2017-03-27T16:18:50.000Z</updated>
+  <updated>2017-06-23T06:43:16.000Z</updated>
   <id>https://majiaji.github.io/</id>
   
   <author>
@@ -14,6 +14,48 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>maven包冲突和解决</title>
+    <link href="https://majiaji.github.io/2017/06/23/maven%E5%8C%85%E5%86%B2%E7%AA%81%E5%92%8C%E8%A7%A3%E5%86%B3/"/>
+    <id>https://majiaji.github.io/2017/06/23/maven包冲突和解决/</id>
+    <published>2017-06-22T18:25:00.000Z</published>
+    <updated>2017-06-23T06:43:16.000Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="玄学问题"><a href="#玄学问题" class="headerlink" title="玄学问题"></a>玄学问题</h3><p>maven的作者认为项目中依赖哪个包应该完全由开发人员来负责(确实应该如此)，所以maven只提供了几个在加载包时的优先级机制和规则。在工作中，开发人员对maven了解程度不同、依赖的包又间接依赖混乱等问题，导致应用在启动时经常会出现”class not found”或者”no such method”的异常，最终应用无法启动。如果不解决包冲突，那就经常会出现测试环境ok，但是发到线上环境就异常的“玄学”问题。</p>
+<a id="more"></a>
+<h3 id="maven加载优先级"><a href="#maven加载优先级" class="headerlink" title="maven加载优先级"></a>maven加载优先级</h3><p>所以maven的优先级和规则究竟是怎样的呢？在研究了<a href="http://people.apache.org/~jvanzyl/maven-3.1.1/guides/introduction/introduction-to-dependency-mechanism.html" target="_blank" rel="external">官方文档</a>后做了一些总结，一共有如下几个规则：</p>
+<ol>
+<li>“nearest definition”最近优先原则：如果两个包A和B在同一层，它们分别间接依赖了包C，那么会加载离AB这层最近的版本的C。如果C的距离也是相同的，那么就加载遇到的第一个。maven的这个机制试图解决传递依赖过程中，具体用哪个包的问题。</li>
+<li>“Dependency management”提供一种机制可以让开发者显示指定要用哪个版本，实现统一管理。一般在多模块的父子pom模式中，在父pom中使用<dependencymanagement>指定好所有依赖的版本，子pom中写自己要用的包，但不带版本号。</dependencymanagement></li>
+</ol>
+<p>优先级问题：</p>
+<p>子模块在加载时，遇到一个包要确定版本号：如果子pom指定了版本号，则使用此版本的包（不推荐这样做）；否则尝试使用父pom中dependencyManagement中标明的版本号；dependencyManagement中也没有标明，则依赖“nearest definition”规则，找离根节点最近的包，或者同距离的第一个包。</p>
+<h3 id="最佳实践"><a href="#最佳实践" class="headerlink" title="最佳实践"></a>最佳实践</h3><ol>
+<li>创建项目：在父pom中dependencyManagement列清所有要依赖的包和版本号，子pom中写自己要用的包的groupId和artifactId，版本由父pom统一管理。</li>
+<li>给别人打包：maven依赖可以指定在不同阶段使用不通的范围，具体可以参考官方文档中Dependency Scope的介绍。给别人打包时尽量少依赖第三方的包、或者最好把第三包的Scope设置为provided,减少对于使用方的影响。</li>
+</ol>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>了解了maven加载优先级，但是还是躲不掉包冲突的问题，因为我们不可能去遍历依赖包的所有传递依赖。解决包冲突问题有几个步骤：</p>
+<ol>
+<li>查看日志，定位到包的代码。确定是哪些包冲突了。</li>
+<li>使用maven:tree命令或者idea辅助确定：<br><img src="/images/resolvePomConflict.jpg" alt=""></li>
+<li>在父pom中使用exclude把不用的包排掉。</li>
+</ol>
+<p>选择依赖时尽量使用有名的或者大厂的包，可能会避免很多问题。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;玄学问题&quot;&gt;&lt;a href=&quot;#玄学问题&quot; class=&quot;headerlink&quot; title=&quot;玄学问题&quot;&gt;&lt;/a&gt;玄学问题&lt;/h3&gt;&lt;p&gt;maven的作者认为项目中依赖哪个包应该完全由开发人员来负责(确实应该如此)，所以maven只提供了几个在加载包时的优先级机制和规则。在工作中，开发人员对maven了解程度不同、依赖的包又间接依赖混乱等问题，导致应用在启动时经常会出现”class not found”或者”no such method”的异常，最终应用无法启动。如果不解决包冲突，那就经常会出现测试环境ok，但是发到线上环境就异常的“玄学”问题。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="后台" scheme="https://majiaji.github.io/categories/%E5%90%8E%E5%8F%B0/"/>
+    
+    
+      <category term="后台" scheme="https://majiaji.github.io/tags/%E5%90%8E%E5%8F%B0/"/>
+    
+  </entry>
   
   <entry>
     <title>ThreadLocal WeakReference和内存泄漏的思考</title>

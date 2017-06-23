@@ -66,12 +66,12 @@
 
 <meta name="description" content="一只正在努力的鶸">
 <meta property="og:type" content="website">
-<meta property="og:title" content="fantasy's blog">
+<meta property="og:title" content="fantasy&#39;s blog">
 <meta property="og:url" content="https://majiaji.github.io/index.html">
-<meta property="og:site_name" content="fantasy's blog">
+<meta property="og:site_name" content="fantasy&#39;s blog">
 <meta property="og:description" content="一只正在努力的鶸">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="fantasy's blog">
+<meta name="twitter:title" content="fantasy&#39;s blog">
 <meta name="twitter:description" content="一只正在努力的鶸">
 
 
@@ -1047,7 +1047,7 @@
           <h2 id="为什么要长连接"><a href="#为什么要长连接" class="headerlink" title="为什么要长连接"></a>为什么要长连接</h2><h3 id="资源中心or控制中心"><a href="#资源中心or控制中心" class="headerlink" title="资源中心or控制中心"></a>资源中心or控制中心</h3><p>很久以来，服务端一直作为“统一资源中心”而存在，所以后台开发工程师们的基础工作就是存储、维护和管理用户的数据，然后开接口给客户端&amp;&amp;前端同学使用。后来出现了restful架构风格：一个URI代表一个资源，客户端用HTTP协议的操作方式（GET、POST、PUT、DELETE）对资源进行操作，即完成了与服务端的交互。这样的设计可以让服务端的逻辑变得非常的轻，真的变成了“资源中心”了。客户端可以依托操作资源的接口去实现真正的业务逻辑，渲染界面。考虑到一些异常情况处理，逻辑会做的比较重。</p>
 <p>对于后台开发同学来说，一定不会满足于“资源管理者”这样的角色，每天写写增删改查和字符串拼接。因为有长连接技术的存在，服务端可以做更多的事情。相对于客户端把服务端当成“数据资源库”，反过来，服务端也可以把客户端看成“UI库”，通过长连接通道推送命令下去，指导客户端UI进行变化。这样服务端就从“资源中心”变成了“控制中心”。当然这是一种比较极端的设计，长连接可能因为网络或者客户端环境问题断掉，这样控制中心就失去控制能力了。所以在实现业务时可以用推拉结合的模式。</p>
 <h3 id="即时触达的能力"><a href="#即时触达的能力" class="headerlink" title="即时触达的能力"></a>即时触达的能力</h3><p>因为有了长连接通道，服务端有了消息即时触达的能力，同时避免了客户端分布式攻击式的轮询。这个能力是非常非常重要的，在设计在线网络游戏、IM系统、推送系统时长连接通道不可或缺。</p>
-<h3 id="业界通用推送方法"><a href="#业界通用推送方法" class="headerlink" title="业界通用推送方法"></a>业界通用推送方法</h3><p>现在移动端都有自己的push系统，iOS有<a href="https://developer.apple.com/notifications/">APNS(Apple Push Notification service)</a>,Android有<a href="https://developers.google.com/cloud-messaging/?hl=zh-cn/">GCM(Google Cloud Messaging)</a>。可以简单理解为官方的一个服务和移动客户端建立了一个长连接，所有的app共用这条通道，每次推送时要用自己的服务调用一下官方服务的接口，然后由官方的服务进行推送，客户端收到推送后会在系统通知栏看到app推送的一个概要信息，用户点击这条push,会唤起对应的app，进入app后会调用app自己的服务接口拉取更多的业务数据。</p>
+<h3 id="业界通用推送方法"><a href="#业界通用推送方法" class="headerlink" title="业界通用推送方法"></a>业界通用推送方法</h3><p>现在移动端都有自己的push系统，iOS有<a href="https://developer.apple.com/notifications/" target="_blank" rel="external">APNS(Apple Push Notification service)</a>,Android有<a href="https://developers.google.com/cloud-messaging/?hl=zh-cn/" target="_blank" rel="external">GCM(Google Cloud Messaging)</a>。可以简单理解为官方的一个服务和移动客户端建立了一个长连接，所有的app共用这条通道，每次推送时要用自己的服务调用一下官方服务的接口，然后由官方的服务进行推送，客户端收到推送后会在系统通知栏看到app推送的一个概要信息，用户点击这条push,会唤起对应的app，进入app后会调用app自己的服务接口拉取更多的业务数据。</p>
 <p>因为哈哈哈哈的原因，GCM在国内几乎不能使用；如果应用有pc端还要支持pc端的推送;业务比较复杂时会希望设计一种更高效灵活的推送协议。基于以上原因，开发者会设计自己的长连接通道和推送协议。</p>
           <!--noindex-->
           <div class="post-more-link text-center">
@@ -1197,7 +1197,7 @@
 <li>notification of evicted (or otherwise removed) entries</li>
 <li>accumulation of cache access statistics</li>
 </ul>
-<p>这些特性都是可选的，可在初始化时的建造者模式中进行配置。<br>今天主要根据源码来讲一下Guava Cache（19.0）的实现，具体的应用方法可以参考<a href="https://github.com/google/guava/wiki/CachesExplained">官方文档</a>。</p>
+<p>这些特性都是可选的，可在初始化时的建造者模式中进行配置。<br>今天主要根据源码来讲一下Guava Cache（19.0）的实现，具体的应用方法可以参考<a href="https://github.com/google/guava/wiki/CachesExplained" target="_blank" rel="external">官方文档</a>。</p>
           <!--noindex-->
           <div class="post-more-link text-center">
             <a class="btn" href="/2016/12/11/Guava-Cache/#more" rel="contents">
@@ -1346,7 +1346,7 @@
 </li>
 </ol>
 </blockquote>
-<p>具体的推导过程可以看下<a href="https://en.wikipedia.org/wiki/Bloom_filter#Probability_of_false_positives">这里。</a><br>
+<p>具体的推导过程可以看下<a href="https://en.wikipedia.org/wiki/Bloom_filter#Probability_of_false_positives" target="_blank" rel="external">这里。</a><br>
           <!--noindex-->
           <div class="post-more-link text-center">
             <a class="btn" href="/2016/12/04/Guava-BloomFilter/#more" rel="contents">
@@ -1626,7 +1626,7 @@
 
       
         
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前段时间有个比较🔥的文章 <a href="https://zhuanlan.zhihu.com/p/22782487">在2016年学JavaScript是一种什么样的体验</a> 读完之后深深感受到了前端同学的痛点：用好各种框架、脚手架已经让人应接不暇了，与此同时还要不停地造自己的小轮子，着实不易。</p>
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前段时间有个比较🔥的文章 <a href="https://zhuanlan.zhihu.com/p/22782487" target="_blank" rel="external">在2016年学JavaScript是一种什么样的体验</a> 读完之后深深感受到了前端同学的痛点：用好各种框架、脚手架已经让人应接不暇了，与此同时还要不停地造自己的小轮子，着实不易。</p>
 <p>在大学的有段时间，我也考虑过去做前端。因为所见即所得的东西还是很容易给人成就感的。后来只坚持学了半个学期就放弃了，主要因为一直没有搞懂，也记不住各种css标签的含义，这样导致每次在调样式的时候都无比捉急，连最基础的还原视觉稿都做不到。于是又悻悻的回到了黑框框的后端世界。</p>
 <p>正式工作后也有机会接触一些前端的工作，在工作之余我总结了自己常用的开发模式和套路，分享给大家：</p>
           <!--noindex-->

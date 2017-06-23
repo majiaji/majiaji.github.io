@@ -265,7 +265,7 @@
       &lt;h2 id=&quot;为什么要长连接&quot;&gt;&lt;a href=&quot;#为什么要长连接&quot; class=&quot;headerlink&quot; title=&quot;为什么要长连接&quot;&gt;&lt;/a&gt;为什么要长连接&lt;/h2&gt;&lt;h3 id=&quot;资源中心or控制中心&quot;&gt;&lt;a href=&quot;#资源中心or控制中心&quot; class=&quot;headerlink&quot; title=&quot;资源中心or控制中心&quot;&gt;&lt;/a&gt;资源中心or控制中心&lt;/h3&gt;&lt;p&gt;很久以来，服务端一直作为“统一资源中心”而存在，所以后台开发工程师们的基础工作就是存储、维护和管理用户的数据，然后开接口给客户端&amp;amp;&amp;amp;前端同学使用。后来出现了restful架构风格：一个URI代表一个资源，客户端用HTTP协议的操作方式（GET、POST、PUT、DELETE）对资源进行操作，即完成了与服务端的交互。这样的设计可以让服务端的逻辑变得非常的轻，真的变成了“资源中心”了。客户端可以依托操作资源的接口去实现真正的业务逻辑，渲染界面。考虑到一些异常情况处理，逻辑会做的比较重。&lt;/p&gt;
 &lt;p&gt;对于后台开发同学来说，一定不会满足于“资源管理者”这样的角色，每天写写增删改查和字符串拼接。因为有长连接技术的存在，服务端可以做更多的事情。相对于客户端把服务端当成“数据资源库”，反过来，服务端也可以把客户端看成“UI库”，通过长连接通道推送命令下去，指导客户端UI进行变化。这样服务端就从“资源中心”变成了“控制中心”。当然这是一种比较极端的设计，长连接可能因为网络或者客户端环境问题断掉，这样控制中心就失去控制能力了。所以在实现业务时可以用推拉结合的模式。&lt;/p&gt;
 &lt;h3 id=&quot;即时触达的能力&quot;&gt;&lt;a href=&quot;#即时触达的能力&quot; class=&quot;headerlink&quot; title=&quot;即时触达的能力&quot;&gt;&lt;/a&gt;即时触达的能力&lt;/h3&gt;&lt;p&gt;因为有了长连接通道，服务端有了消息即时触达的能力，同时避免了客户端分布式攻击式的轮询。这个能力是非常非常重要的，在设计在线网络游戏、IM系统、推送系统时长连接通道不可或缺。&lt;/p&gt;
-&lt;h3 id=&quot;业界通用推送方法&quot;&gt;&lt;a href=&quot;#业界通用推送方法&quot; class=&quot;headerlink&quot; title=&quot;业界通用推送方法&quot;&gt;&lt;/a&gt;业界通用推送方法&lt;/h3&gt;&lt;p&gt;现在移动端都有自己的push系统，iOS有&lt;a href=&quot;https://developer.apple.com/notifications/&quot;&gt;APNS(Apple Push Notification service)&lt;/a&gt;,Android有&lt;a href=&quot;https://developers.google.com/cloud-messaging/?hl=zh-cn/&quot;&gt;GCM(Google Cloud Messaging)&lt;/a&gt;。可以简单理解为官方的一个服务和移动客户端建立了一个长连接，所有的app共用这条通道，每次推送时要用自己的服务调用一下官方服务的接口，然后由官方的服务进行推送，客户端收到推送后会在系统通知栏看到app推送的一个概要信息，用户点击这条push,会唤起对应的app，进入app后会调用app自己的服务接口拉取更多的业务数据。&lt;/p&gt;
+&lt;h3 id=&quot;业界通用推送方法&quot;&gt;&lt;a href=&quot;#业界通用推送方法&quot; class=&quot;headerlink&quot; title=&quot;业界通用推送方法&quot;&gt;&lt;/a&gt;业界通用推送方法&lt;/h3&gt;&lt;p&gt;现在移动端都有自己的push系统，iOS有&lt;a href=&quot;https://developer.apple.com/notifications/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;APNS(Apple Push Notification service)&lt;/a&gt;,Android有&lt;a href=&quot;https://developers.google.com/cloud-messaging/?hl=zh-cn/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;GCM(Google Cloud Messaging)&lt;/a&gt;。可以简单理解为官方的一个服务和移动客户端建立了一个长连接，所有的app共用这条通道，每次推送时要用自己的服务调用一下官方服务的接口，然后由官方的服务进行推送，客户端收到推送后会在系统通知栏看到app推送的一个概要信息，用户点击这条push,会唤起对应的app，进入app后会调用app自己的服务接口拉取更多的业务数据。&lt;/p&gt;
 &lt;p&gt;因为哈哈哈哈的原因，GCM在国内几乎不能使用；如果应用有pc端还要支持pc端的推送;业务比较复杂时会希望设计一种更高效灵活的推送协议。基于以上原因，开发者会设计自己的长连接通道和推送协议。&lt;/p&gt;
     
     </summary>
@@ -325,7 +325,7 @@
 &lt;li&gt;notification of evicted (or otherwise removed) entries&lt;/li&gt;
 &lt;li&gt;accumulation of cache access statistics&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;这些特性都是可选的，可在初始化时的建造者模式中进行配置。&lt;br&gt;今天主要根据源码来讲一下Guava Cache（19.0）的实现，具体的应用方法可以参考&lt;a href=&quot;https://github.com/google/guava/wiki/CachesExplained&quot;&gt;官方文档&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;这些特性都是可选的，可在初始化时的建造者模式中进行配置。&lt;br&gt;今天主要根据源码来讲一下Guava Cache（19.0）的实现，具体的应用方法可以参考&lt;a href=&quot;https://github.com/google/guava/wiki/CachesExplained&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;官方文档&lt;/a&gt;。&lt;/p&gt;
     
     </summary>
     
@@ -386,7 +386,7 @@
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;具体的推导过程可以看下&lt;a href=&quot;https://en.wikipedia.org/wiki/Bloom_filter#Probability_of_false_positives&quot;&gt;这里。&lt;/a&gt;&lt;br&gt;
+&lt;p&gt;具体的推导过程可以看下&lt;a href=&quot;https://en.wikipedia.org/wiki/Bloom_filter#Probability_of_false_positives&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;这里。&lt;/a&gt;&lt;br&gt;
     
     </summary>
     
@@ -461,7 +461,7 @@
     
     <summary type="html">
     
-      &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;前段时间有个比较🔥的文章 &lt;a href=&quot;https://zhuanlan.zhihu.com/p/22782487&quot;&gt;在2016年学JavaScript是一种什么样的体验&lt;/a&gt; 读完之后深深感受到了前端同学的痛点：用好各种框架、脚手架已经让人应接不暇了，与此同时还要不停地造自己的小轮子，着实不易。&lt;/p&gt;
+      &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;前段时间有个比较🔥的文章 &lt;a href=&quot;https://zhuanlan.zhihu.com/p/22782487&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;在2016年学JavaScript是一种什么样的体验&lt;/a&gt; 读完之后深深感受到了前端同学的痛点：用好各种框架、脚手架已经让人应接不暇了，与此同时还要不停地造自己的小轮子，着实不易。&lt;/p&gt;
 &lt;p&gt;在大学的有段时间，我也考虑过去做前端。因为所见即所得的东西还是很容易给人成就感的。后来只坚持学了半个学期就放弃了，主要因为一直没有搞懂，也记不住各种css标签的含义，这样导致每次在调样式的时候都无比捉急，连最基础的还原视觉稿都做不到。于是又悻悻的回到了黑框框的后端世界。&lt;/p&gt;
 &lt;p&gt;正式工作后也有机会接触一些前端的工作，在工作之余我总结了自己常用的开发模式和套路，分享给大家：&lt;/p&gt;
     

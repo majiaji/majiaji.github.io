@@ -66,16 +66,16 @@
 
     
   <url>
-    <loc>https://majiaji.github.io/2016/12/03/httpClient%E5%8F%82%E6%95%B0%E8%AE%BE%E7%BD%AE/</loc>
+    <loc>https://majiaji.github.io/2016/12/11/Guava-Cache/</loc>
     <lastmod>2017-03-19T08:26:17.000Z</lastmod>
     <data>
         <display>
-        <title>httpClient参数设置</title>
-        <pubTime>2016-12-02T17:27:28.000Z</pubTime>
+        <title>Guava Cache</title>
+        <pubTime>2016-12-11T05:31:42.000Z</pubTime>
         
-        <tag>后台</tag>
+        <tag>Guava</tag>
          
-        <tag>httpClient</tag>
+        <tag>后台</tag>
          
          
            
@@ -88,16 +88,16 @@
 
     
   <url>
-    <loc>https://majiaji.github.io/2016/12/11/Guava-Cache/</loc>
+    <loc>https://majiaji.github.io/2016/12/03/httpClient%E5%8F%82%E6%95%B0%E8%AE%BE%E7%BD%AE/</loc>
     <lastmod>2017-03-19T08:26:17.000Z</lastmod>
     <data>
         <display>
-        <title>Guava Cache</title>
-        <pubTime>2016-12-11T05:31:42.000Z</pubTime>
+        <title>httpClient参数设置</title>
+        <pubTime>2016-12-02T17:27:28.000Z</pubTime>
         
-        <tag>Guava</tag>
-         
         <tag>后台</tag>
+         
+        <tag>httpClient</tag>
          
          
            

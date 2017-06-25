@@ -16,20 +16,6 @@
   </url>
   
   <url>
-    <loc>https://majiaji.coding.me/2016/12/25/%E7%90%86%E8%A7%A3%E5%9B%9E%E8%B0%83/</loc>
-    
-    <lastmod>2017-03-19T08:26:17.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://majiaji.coding.me/2016/12/11/Guava-Cache/</loc>
-    
-    <lastmod>2017-03-19T08:26:17.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://majiaji.coding.me/2017/02/13/2017%E5%B9%B4%E5%90%8E%E5%B0%8F%E8%AE%B0/</loc>
     
     <lastmod>2017-03-19T08:26:17.000Z</lastmod>
@@ -44,14 +30,7 @@
   </url>
   
   <url>
-    <loc>https://majiaji.coding.me/2016/12/04/Guava-BloomFilter/</loc>
-    
-    <lastmod>2017-03-19T08:26:17.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://majiaji.coding.me/2016/12/31/2016%E5%B9%B4%E6%80%BB%E7%BB%93/</loc>
+    <loc>https://majiaji.coding.me/2016/12/11/Guava-Cache/</loc>
     
     <lastmod>2017-03-19T08:26:17.000Z</lastmod>
     
@@ -65,7 +44,14 @@
   </url>
   
   <url>
-    <loc>https://majiaji.coding.me/2016/11/21/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/</loc>
+    <loc>https://majiaji.coding.me/2016/12/31/2016%E5%B9%B4%E6%80%BB%E7%BB%93/</loc>
+    
+    <lastmod>2017-03-19T08:26:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://majiaji.coding.me/2016/12/04/Guava-BloomFilter/</loc>
     
     <lastmod>2017-03-19T08:26:17.000Z</lastmod>
     
@@ -73,6 +59,20 @@
   
   <url>
     <loc>https://majiaji.coding.me/2016/12/24/%E9%95%BF%E8%BF%9E%E6%8E%A5%E9%80%9A%E9%81%93%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/</loc>
+    
+    <lastmod>2017-03-19T08:26:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://majiaji.coding.me/2016/12/25/%E7%90%86%E8%A7%A3%E5%9B%9E%E8%B0%83/</loc>
+    
+    <lastmod>2017-03-19T08:26:17.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://majiaji.coding.me/2016/11/21/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/</loc>
     
     <lastmod>2017-03-19T08:26:17.000Z</lastmod>
     

@@ -9,6 +9,6 @@ Disallow: /fonts/
 Disallow: /vendors/
 Disallow: /fancybox/
 
-Sitemap: https://majiaji.github.io/sitemap.xml
-Sitemap: https://majiaji.github.io/baidusitemap.xml
+Sitemap: https://majiaji.coding.me/sitemap.xml
+Sitemap: https://majiaji.coding.me/baidusitemap.xml
 

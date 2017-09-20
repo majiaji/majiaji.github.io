@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://majiaji.coding.me/"/>
-  <updated>2017-09-20T05:13:33.000Z</updated>
+  <updated>2017-09-20T05:20:10.000Z</updated>
   <id>https://majiaji.coding.me/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="https://majiaji.coding.me/2017/09/19/%E7%90%86%E8%A7%A3OAuth/"/>
     <id>https://majiaji.coding.me/2017/09/19/理解OAuth/</id>
     <published>2017-09-19T01:20:10.000Z</published>
-    <updated>2017-09-20T05:13:33.000Z</updated>
+    <updated>2017-09-20T05:20:10.000Z</updated>
     
-    <content type="html"><![CDATA[<h3 id="什么是OAuth"><a href="#什么是OAuth" class="headerlink" title="什么是OAuth"></a>什么是OAuth</h3><p>OAuth是一种将用户资源或内部资源开放给合作开发者，但不泄露用户密码，并且需要用户授权同意的授权协议。</p><p>OAuth是开放平台的基础，现在常用的有服务端模式（Authorization Code Flow）和客户端模式（Implicit Flow）。</p><a id="more"></a><h3 id="OAuth的两种模式"><a href="#OAuth的两种模式" class="headerlink" title="OAuth的两种模式"></a>OAuth的两种模式</h3><p>这里以<a href="https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1419316505&token=&lang=zh_CN" target="_blank" rel="external">微信开放平台</a>为例，介绍一下OAuth的角色和,一般有三种：用户、第三方应用(isv)、开放平台。接入时第三方应用要先去开放平台上申请得到一个AppID和AppSecret，作为自己的标识。开放平台可以根据第三方应用的功能和场景进行审核，接入后进行管理和统计。</p><h4 id="服务端模式"><a href="#服务端模式" class="headerlink" title="服务端模式"></a>服务端模式</h4><p>服务端模式(Authorization Code Flow)适用于有第三方应用有自己服务器的应用，是微信开放平台主要的接入模式。该模式整体流程为：</p><ol><li>第三方发起微信授权登录请求，微信用户允许授权第三方应用后，微信会拉起应用或重定向到第三方网站，并且带上授权临时票据code参数；</li><li>通过code参数加上AppID和AppSecret等，通过API换取access_token；</li><li><p>通过access_token进行接口调用，获取用户基本数据资源或帮助用户实现基本操作。</p><p><img src="/images/WechatIMG5053.jpeg" alt=""></p></li></ol><p>思考：</p><ol><li>第三方应用在拉起开放平台授权页面时，要带上授权的范围(scope)，这个范围同时会给用户看到，让用户去确认是否给与第三方应用这些权限。</li><li>用户确认后，开放平台会跳转到第三方应用的redirectUrl，开放平台在跳转时会对这个url的域名做校验，以确保真的是已接入的第三方应用来发起的授权流程。因为从拉起到获取code这个过程，是没有什么安全校验的，只要知道AppId，任何人都可以发起授权流程。</li><li>为什么要先拿code再用code去换access_token?是否多此一举？答案是否定的，因为并不是所有第三方应用的服务器都能很好的支持HTTPS（because not all developers have an SSL enabled server and if they do it’s not always properly configured (non-self signed, trusted SSL certificates, synchronised server clock…)），如果不支持https，那么直接跳转带access_token会有被中间人获取的风险。所以这里开放平台跳转时只给了一个code，需要第三方开发者拿AppId和AppSecret去交换access_token，并且保证这个code只能被用一次，有有效时间（微信为10分钟）。开放平台本身必须支持https，在换access_token时不会泄露第三方应用的AppSecret。所以“先给code再换token”的模式是为了适应不支持https的第三方应用server的权衡之举。</li><li>理想情况下，如果所有的第三方应用服务器都支持了https，或者大家全部切到了http2，那么是可以直接给access_token的。</li><li>服务端模式下，获取的token结果中有access_token和refresh_token，refresh_token可以保证在很长一段时间内不需要用户重新授权（微信为30天），提升用户体验。</li><li>服务端授权广泛的应用于第三方平台的登录。常见的有微信/qq登录、淘宝/支付宝登录、微博登录等等，降低了注册门槛。基础的授权只能拿到用户的昵称和头像，需要做自己的业务时可能还要引导用户去绑定手机号等信息。</li></ol><h4 id="客户端模式"><a href="#客户端模式" class="headerlink" title="客户端模式"></a>客户端模式</h4><p>客户端模式（Implicit Flow）适用于第三方应用没有服务端的情况，<a href="https://open.taobao.com/docs/doc.htm?spm=a219a.7629140.0.0.2MDF5v&treeId=49&articleId=102635&docType=1" target="_blank" rel="external">淘宝开放平台</a>有具体应用，该模式整体流程为：</p><ol><li>第三方发起授权请求，引导用户进行授权。</li><li>用户确认授权后，直接获得access_token。</li><li>通过access_token进行接口调用，获取用户基本数据资源或帮助用户实现基本操作。</li></ol><p>可以看到，客户端模式与服务端模式主要差别在于客户端模式直接获得了access_token。</p><p>原因在于客户端模式把access_token放到了hash fragment里（地址#后边部分），这样有且只有浏览器能访问并操作它。Hash fragment有两个特性：</p><ol><li>They are not part of the HTTP request therefore they can’t be read by servers and because of that they cannot be intercepted by intermediary servers/routers (this is important).</li><li>They only exist on the browser - client side - so the only way to read the hash fragment is using JavaScript that runs on the page.</li></ol><p>依赖这种机制第三方应用的前端页面可以安全的拿到用户的access_token，而不会被中间人获取。</p><p>客户端模式的安全性不如服务端模式，当发生域名劫持时，会把access_token直接吐给攻击者。这也是为什么客户端模式只能拿到access_token(调用凭证)，而没有refresh_token（续期凭证）的原因之一。</p><h3 id="授权维度"><a href="#授权维度" class="headerlink" title="授权维度"></a>授权维度</h3><p>上述两种模式都是用户维度的，需要用户确认授权。当第三方应用自己需要和开放平台交互时，会用AppID和AppSecret去交换应用维度的access_token，由第三方应用自己去刷新和维护。</p><h3 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h3><p>安全方案要考虑具体的环境，甚至合作方的环境，了解协议细节，时刻心存敬畏。</p>]]></content>
+    <content type="html"><![CDATA[<h3 id="什么是OAuth"><a href="#什么是OAuth" class="headerlink" title="什么是OAuth"></a>什么是OAuth</h3><p>OAuth是一种将用户资源或内部资源开放给合作开发者，但不泄露用户密码，并且需要用户授权同意的授权协议。</p><p>OAuth是开放平台的基础，现在常用的有服务端模式（Authorization Code Flow）和客户端模式（Implicit Flow）。</p><a id="more"></a><h3 id="OAuth的两种模式"><a href="#OAuth的两种模式" class="headerlink" title="OAuth的两种模式"></a>OAuth的两种模式</h3><p>这里以<a href="https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1419316505&token=&lang=zh_CN" target="_blank" rel="external">微信开放平台</a>为例，介绍一下OAuth的角色和,一般有三种：用户、第三方应用(isv)、开放平台。接入时第三方应用要先去开放平台上申请得到一个AppID和AppSecret，作为自己的标识。开放平台可以根据第三方应用的功能和场景进行审核，接入后进行管理和统计。</p><h4 id="服务端模式"><a href="#服务端模式" class="headerlink" title="服务端模式"></a>服务端模式</h4><p>服务端模式(Authorization Code Flow)适用于有第三方应用有自己服务器的应用，是微信开放平台主要的接入模式。该模式整体流程为：</p><ol><li>第三方发起微信授权登录请求，微信用户允许授权第三方应用后，微信会拉起应用或重定向到第三方网站，并且带上授权临时票据code参数；</li><li>通过code参数加上AppID和AppSecret等，通过API换取access_token；</li><li><p>通过access_token进行接口调用，获取用户基本数据资源或帮助用户实现基本操作。</p><p><img src="/images/oauth.png" alt=""></p></li></ol><p>思考：</p><ol><li>第三方应用在拉起开放平台授权页面时，要带上授权的范围(scope)，这个范围同时会给用户看到，让用户去确认是否给与第三方应用这些权限。</li><li>用户确认后，开放平台会跳转到第三方应用的redirectUrl，开放平台在跳转时会对这个url的域名做校验，以确保真的是已接入的第三方应用来发起的授权流程。因为从拉起到获取code这个过程，是没有什么安全校验的，只要知道AppId，任何人都可以发起授权流程。</li><li>为什么要先拿code再用code去换access_token?是否多此一举？答案是否定的，因为并不是所有第三方应用的服务器都能很好的支持HTTPS（because not all developers have an SSL enabled server and if they do it’s not always properly configured (non-self signed, trusted SSL certificates, synchronised server clock…)），如果不支持https，那么直接跳转带access_token会有被中间人获取的风险。所以这里开放平台跳转时只给了一个code，需要第三方开发者拿AppId和AppSecret去交换access_token，并且保证这个code只能被用一次，有有效时间（微信为10分钟）。开放平台本身必须支持https，在换access_token时不会泄露第三方应用的AppSecret。所以“先给code再换token”的模式是为了适应不支持https的第三方应用server的权衡之举。</li><li>理想情况下，如果所有的第三方应用服务器都支持了https，或者大家全部切到了http2，那么是可以直接给access_token的。</li><li>服务端模式下，获取的token结果中有access_token和refresh_token，refresh_token可以保证在很长一段时间内不需要用户重新授权（微信为30天），提升用户体验。</li><li>服务端授权广泛的应用于第三方平台的登录。常见的有微信/qq登录、淘宝/支付宝登录、微博登录等等，降低了注册门槛。基础的授权只能拿到用户的昵称和头像，需要做自己的业务时可能还要引导用户去绑定手机号等信息。</li></ol><h4 id="客户端模式"><a href="#客户端模式" class="headerlink" title="客户端模式"></a>客户端模式</h4><p>客户端模式（Implicit Flow）适用于第三方应用没有服务端的情况，<a href="https://open.taobao.com/docs/doc.htm?spm=a219a.7629140.0.0.2MDF5v&treeId=49&articleId=102635&docType=1" target="_blank" rel="external">淘宝开放平台</a>有具体应用，该模式整体流程为：</p><ol><li>第三方发起授权请求，引导用户进行授权。</li><li>用户确认授权后，直接获得access_token。</li><li>通过access_token进行接口调用，获取用户基本数据资源或帮助用户实现基本操作。</li></ol><p>可以看到，客户端模式与服务端模式主要差别在于客户端模式直接获得了access_token。</p><p>原因在于客户端模式把access_token放到了hash fragment里（地址#后边部分），这样有且只有浏览器能访问并操作它。Hash fragment有两个特性：</p><ol><li>They are not part of the HTTP request therefore they can’t be read by servers and because of that they cannot be intercepted by intermediary servers/routers (this is important).</li><li>They only exist on the browser - client side - so the only way to read the hash fragment is using JavaScript that runs on the page.</li></ol><p>依赖这种机制第三方应用的前端页面可以安全的拿到用户的access_token，而不会被中间人获取。</p><p>客户端模式的安全性不如服务端模式，当发生域名劫持时，会把access_token直接吐给攻击者。这也是为什么客户端模式只能拿到access_token(调用凭证)，而没有refresh_token（续期凭证）的原因之一。</p><h3 id="授权维度"><a href="#授权维度" class="headerlink" title="授权维度"></a>授权维度</h3><p>上述两种模式都是用户维度的，需要用户确认授权。当第三方应用自己需要和开放平台交互时，会用AppID和AppSecret去交换应用维度的access_token，由第三方应用自己去刷新和维护。</p><h3 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h3><p>安全方案要考虑具体的环境，甚至合作方的环境，了解协议细节，时刻心存敬畏。</p>]]></content>
     
     <summary type="html">
     
@@ -216,9 +216,9 @@
       <category term="后台" scheme="https://majiaji.coding.me/categories/%E5%90%8E%E5%8F%B0/"/>
     
     
-      <category term="Guava" scheme="https://majiaji.coding.me/tags/Guava/"/>
-    
       <category term="后台" scheme="https://majiaji.coding.me/tags/%E5%90%8E%E5%8F%B0/"/>
+    
+      <category term="Guava" scheme="https://majiaji.coding.me/tags/Guava/"/>
     
   </entry>
   
@@ -250,9 +250,9 @@
       <category term="后台" scheme="https://majiaji.coding.me/categories/%E5%90%8E%E5%8F%B0/"/>
     
     
-      <category term="Guava" scheme="https://majiaji.coding.me/tags/Guava/"/>
-    
       <category term="后台" scheme="https://majiaji.coding.me/tags/%E5%90%8E%E5%8F%B0/"/>
+    
+      <category term="Guava" scheme="https://majiaji.coding.me/tags/Guava/"/>
     
   </entry>
   
@@ -276,9 +276,9 @@
       <category term="后台" scheme="https://majiaji.coding.me/categories/%E5%90%8E%E5%8F%B0/"/>
     
     
-      <category term="后台" scheme="https://majiaji.coding.me/tags/%E5%90%8E%E5%8F%B0/"/>
-    
       <category term="httpClient" scheme="https://majiaji.coding.me/tags/httpClient/"/>
+    
+      <category term="后台" scheme="https://majiaji.coding.me/tags/%E5%90%8E%E5%8F%B0/"/>
     
   </entry>
   

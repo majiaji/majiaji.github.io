@@ -46,7 +46,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="闲谈," />
+  <meta name="keywords" content="安全," />
 
 
 
@@ -64,18 +64,20 @@
 
 
 
-<meta name="description" content="为什么要写博客  现在技术越来越好了，网络内容的主流媒介完成了文字-&amp;gt;图片-&amp;gt;视频-&amp;gt;直播这样的转变。下班回来后，经常各种app(微信知乎头条微博等)刷一遍，来补充一下白天被抽空的精神世界。后来我发现了一个问题，对于各种网络内容来说，我一直都是一个“看客”，几乎很少去评论或者主动提出一些观点，这是一件非常可怕的事情。虽然看别人的东西也能学到很多东西，但是少了一个自己主动思考的过程">
-<meta name="keywords" content="闲谈">
+<meta name="description" content="什么是OAuthOAuth是一种将用户资源或内部资源开放给合作开发者，但不泄露用户密码，并且需要用户授权同意的授权协议。 OAuth是开放平台的基础，现在常用的有服务端模式（Authorization Code Flow）和客户端模式（Implicit Flow）。">
+<meta name="keywords" content="安全">
 <meta property="og:type" content="article">
-<meta property="og:title" content="啊，第一篇博客">
-<meta property="og:url" content="https://majiaji.coding.me/2016/11/21/第一篇博客/index.html">
+<meta property="og:title" content="理解OAuth">
+<meta property="og:url" content="https://majiaji.coding.me/2017/09/19/理解OAuth/index.html">
 <meta property="og:site_name" content="jiaji&#39;s blog">
-<meta property="og:description" content="为什么要写博客  现在技术越来越好了，网络内容的主流媒介完成了文字-&amp;gt;图片-&amp;gt;视频-&amp;gt;直播这样的转变。下班回来后，经常各种app(微信知乎头条微博等)刷一遍，来补充一下白天被抽空的精神世界。后来我发现了一个问题，对于各种网络内容来说，我一直都是一个“看客”，几乎很少去评论或者主动提出一些观点，这是一件非常可怕的事情。虽然看别人的东西也能学到很多东西，但是少了一个自己主动思考的过程">
+<meta property="og:description" content="什么是OAuthOAuth是一种将用户资源或内部资源开放给合作开发者，但不泄露用户密码，并且需要用户授权同意的授权协议。 OAuth是开放平台的基础，现在常用的有服务端模式（Authorization Code Flow）和客户端模式（Implicit Flow）。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-03-19T08:26:17.000Z">
+<meta property="og:image" content="https://majiaji.coding.me/images/WechatIMG5053.jpeg">
+<meta property="og:updated_time" content="2017-09-20T05:13:33.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="啊，第一篇博客">
-<meta name="twitter:description" content="为什么要写博客  现在技术越来越好了，网络内容的主流媒介完成了文字-&amp;gt;图片-&amp;gt;视频-&amp;gt;直播这样的转变。下班回来后，经常各种app(微信知乎头条微博等)刷一遍，来补充一下白天被抽空的精神世界。后来我发现了一个问题，对于各种网络内容来说，我一直都是一个“看客”，几乎很少去评论或者主动提出一些观点，这是一件非常可怕的事情。虽然看别人的东西也能学到很多东西，但是少了一个自己主动思考的过程">
+<meta name="twitter:title" content="理解OAuth">
+<meta name="twitter:description" content="什么是OAuthOAuth是一种将用户资源或内部资源开放给合作开发者，但不泄露用户密码，并且需要用户授权同意的授权协议。 OAuth是开放平台的基础，现在常用的有服务端模式（Authorization Code Flow）和客户端模式（Implicit Flow）。">
+<meta name="twitter:image" content="https://majiaji.coding.me/images/WechatIMG5053.jpeg">
 
 
 
@@ -103,13 +105,13 @@
 
 
 
-  <link rel="canonical" href="https://majiaji.coding.me/2016/11/21/第一篇博客/"/>
+  <link rel="canonical" href="https://majiaji.coding.me/2017/09/19/理解OAuth/"/>
 
 
 
 
 
-  <title> 啊，第一篇博客 | jiaji's blog </title>
+  <title> 理解OAuth | jiaji's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -249,7 +251,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="https://majiaji.coding.me/2016/11/21/第一篇博客/">
+  <link itemprop="mainEntityOfPage" href="https://majiaji.coding.me/2017/09/19/理解OAuth/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="jiaji">
@@ -273,7 +275,7 @@
             
             
               
-                啊，第一篇博客
+                理解OAuth
               
             
           </h1>
@@ -286,8 +288,8 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-11-21T15:06:25+08:00">
-                2016-11-21
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-19T09:20:10+08:00">
+                2017-09-19
               </time>
             
 
@@ -305,8 +307,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/闲谈/" itemprop="url" rel="index">
-                    <span itemprop="name">闲谈</span>
+                  <a href="/categories/安全/" itemprop="url" rel="index">
+                    <span itemprop="name">安全</span>
                   </a>
                 </span>
 
@@ -320,8 +322,8 @@
             
               <span class="post-comments-count">
                 <span class="post-meta-divider">|</span>
-                <a href="/2016/11/21/第一篇博客/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2016/11/21/第一篇博客/" itemprop="commentCount"></span>
+                <a href="/2017/09/19/理解OAuth/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/09/19/理解OAuth/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -347,10 +349,43 @@
       
 
       
-        <h2>为什么要写博客</h2>
-
-<p>现在技术越来越好了，网络内容的主流媒介完成了文字-&gt;图片-&gt;视频-&gt;直播这样的转变。下班回来后，经常各种app(微信知乎头条微博等)刷一遍，来补充一下白天被抽空的精神世界。后来我发现了一个问题，对于各种网络内容来说，我一直都是一个“看客”，几乎很少去评论或者主动提出一些观点，这是一件非常可怕的事情。虽然看别人的东西也能学到很多东西，但是少了一个自己主动思考的过程。最近也在追<a href="http://www.hbo.com/westworld" target="_blank" rel="external">西部世界</a>，这算不算一种自我觉醒呢？哈哈。<br>所以打算从今天开始写博客了，可能包括自己日常生活中的感悟、吐槽和理解，还会分享一些技术知识和踩过的坑，希望能帮助到大家，也希望能认识更多的朋友。</p>
-<p></p><h2>flag</h2><br>这里先立个flag，每周至少一篇详细的技术博客，坚持，共勉。<p></p>
+        <h3 id="什么是OAuth"><a href="#什么是OAuth" class="headerlink" title="什么是OAuth"></a>什么是OAuth</h3><p>OAuth是一种将用户资源或内部资源开放给合作开发者，但不泄露用户密码，并且需要用户授权同意的授权协议。</p>
+<p>OAuth是开放平台的基础，现在常用的有服务端模式（Authorization Code Flow）和客户端模式（Implicit Flow）。</p>
+<a id="more"></a>
+<h3 id="OAuth的两种模式"><a href="#OAuth的两种模式" class="headerlink" title="OAuth的两种模式"></a>OAuth的两种模式</h3><p>这里以<a href="https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1419316505&token=&lang=zh_CN" target="_blank" rel="external">微信开放平台</a>为例，介绍一下OAuth的角色和,一般有三种：用户、第三方应用(isv)、开放平台。接入时第三方应用要先去开放平台上申请得到一个AppID和AppSecret，作为自己的标识。开放平台可以根据第三方应用的功能和场景进行审核，接入后进行管理和统计。</p>
+<h4 id="服务端模式"><a href="#服务端模式" class="headerlink" title="服务端模式"></a>服务端模式</h4><p>服务端模式(Authorization Code Flow)适用于有第三方应用有自己服务器的应用，是微信开放平台主要的接入模式。该模式整体流程为：</p>
+<ol>
+<li>第三方发起微信授权登录请求，微信用户允许授权第三方应用后，微信会拉起应用或重定向到第三方网站，并且带上授权临时票据code参数；</li>
+<li>通过code参数加上AppID和AppSecret等，通过API换取access_token；</li>
+<li><p>通过access_token进行接口调用，获取用户基本数据资源或帮助用户实现基本操作。</p>
+<p><img src="/images/WechatIMG5053.jpeg" alt=""></p>
+</li>
+</ol>
+<p>思考：</p>
+<ol>
+<li>第三方应用在拉起开放平台授权页面时，要带上授权的范围(scope)，这个范围同时会给用户看到，让用户去确认是否给与第三方应用这些权限。</li>
+<li>用户确认后，开放平台会跳转到第三方应用的redirectUrl，开放平台在跳转时会对这个url的域名做校验，以确保真的是已接入的第三方应用来发起的授权流程。因为从拉起到获取code这个过程，是没有什么安全校验的，只要知道AppId，任何人都可以发起授权流程。</li>
+<li>为什么要先拿code再用code去换access_token?是否多此一举？答案是否定的，因为并不是所有第三方应用的服务器都能很好的支持HTTPS（because not all developers have an SSL enabled server and if they do it’s not always properly configured (non-self signed, trusted SSL certificates, synchronised server clock…)），如果不支持https，那么直接跳转带access_token会有被中间人获取的风险。所以这里开放平台跳转时只给了一个code，需要第三方开发者拿AppId和AppSecret去交换access_token，并且保证这个code只能被用一次，有有效时间（微信为10分钟）。开放平台本身必须支持https，在换access_token时不会泄露第三方应用的AppSecret。所以“先给code再换token”的模式是为了适应不支持https的第三方应用server的权衡之举。</li>
+<li>理想情况下，如果所有的第三方应用服务器都支持了https，或者大家全部切到了http2，那么是可以直接给access_token的。</li>
+<li>服务端模式下，获取的token结果中有access_token和refresh_token，refresh_token可以保证在很长一段时间内不需要用户重新授权（微信为30天），提升用户体验。</li>
+<li>服务端授权广泛的应用于第三方平台的登录。常见的有微信/qq登录、淘宝/支付宝登录、微博登录等等，降低了注册门槛。基础的授权只能拿到用户的昵称和头像，需要做自己的业务时可能还要引导用户去绑定手机号等信息。</li>
+</ol>
+<h4 id="客户端模式"><a href="#客户端模式" class="headerlink" title="客户端模式"></a>客户端模式</h4><p>客户端模式（Implicit Flow）适用于第三方应用没有服务端的情况，<a href="https://open.taobao.com/docs/doc.htm?spm=a219a.7629140.0.0.2MDF5v&treeId=49&articleId=102635&docType=1" target="_blank" rel="external">淘宝开放平台</a>有具体应用，该模式整体流程为：</p>
+<ol>
+<li>第三方发起授权请求，引导用户进行授权。</li>
+<li>用户确认授权后，直接获得access_token。</li>
+<li>通过access_token进行接口调用，获取用户基本数据资源或帮助用户实现基本操作。</li>
+</ol>
+<p>可以看到，客户端模式与服务端模式主要差别在于客户端模式直接获得了access_token。</p>
+<p>原因在于客户端模式把access_token放到了hash fragment里（地址#后边部分），这样有且只有浏览器能访问并操作它。Hash fragment有两个特性：</p>
+<ol>
+<li>They are not part of the HTTP request therefore they can’t be read by servers and because of that they cannot be intercepted by intermediary servers/routers (this is important).</li>
+<li>They only exist on the browser - client side - so the only way to read the hash fragment is using JavaScript that runs on the page.</li>
+</ol>
+<p>依赖这种机制第三方应用的前端页面可以安全的拿到用户的access_token，而不会被中间人获取。</p>
+<p>客户端模式的安全性不如服务端模式，当发生域名劫持时，会把access_token直接吐给攻击者。这也是为什么客户端模式只能拿到access_token(调用凭证)，而没有refresh_token（续期凭证）的原因之一。</p>
+<h3 id="授权维度"><a href="#授权维度" class="headerlink" title="授权维度"></a>授权维度</h3><p>上述两种模式都是用户维度的，需要用户确认授权。当第三方应用自己需要和开放平台交互时，会用AppID和AppSecret去交换应用维度的access_token，由第三方应用自己去刷新和维护。</p>
+<h3 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h3><p>安全方案要考虑具体的环境，甚至合作方的环境，了解协议细节，时刻心存敬畏。</p>
 
       
     </div>
@@ -374,7 +409,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/闲谈/" rel="tag"># 闲谈</a>
+            <a href="/tags/安全/" rel="tag"># 安全</a>
           
         </div>
       
@@ -383,15 +418,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2017/06/23/maven包冲突和解决/" rel="next" title="maven包冲突和解决">
+                <i class="fa fa-chevron-left"></i> maven包冲突和解决
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/11/23/前端开发的浮光掠影/" rel="prev" title="前端开发的浮光掠影">
-                前端开发的浮光掠影 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -545,7 +580,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">为什么要写博客</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">flag</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是OAuth"><span class="nav-number">1.</span> <span class="nav-text">什么是OAuth</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OAuth的两种模式"><span class="nav-number">2.</span> <span class="nav-text">OAuth的两种模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#服务端模式"><span class="nav-number">2.1.</span> <span class="nav-text">服务端模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#客户端模式"><span class="nav-number">2.2.</span> <span class="nav-text">客户端模式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#授权维度"><span class="nav-number">3.</span> <span class="nav-text">授权维度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结语"><span class="nav-number">4.</span> <span class="nav-text">结语</span></a></li></ol></div>
             
 
           </div>
@@ -669,9 +704,9 @@
 
     <script type="text/javascript">
       var disqus_shortname = 'majiaji';
-      var disqus_identifier = '2016/11/21/第一篇博客/';
+      var disqus_identifier = '2017/09/19/理解OAuth/';
 
-      var disqus_title = "啊，第一篇博客";
+      var disqus_title = "理解OAuth";
 
 
       function run_disqus_script(disqus_script) {
